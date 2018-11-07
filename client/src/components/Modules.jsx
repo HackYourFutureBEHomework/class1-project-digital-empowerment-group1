@@ -6,13 +6,15 @@ class Modules extends Component {
     super();
     this.state = {
       title: "",
-      modules: []
+      modules: [],
+      loading: false
     };
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
     getModules().then(modules => {
-      this.setState({ modules: modules});
+      this.setState({ modules: modules, loading: false });
     });
   }
 
@@ -23,39 +25,47 @@ class Modules extends Component {
   };
   addModule = e => {
     e.preventDefault();
+    this.setState({ loading: true });
     createModule(this.state.title).then(newModule => {
       this.setState({
         modules: this.state.modules.concat(newModule),
-        title: ""
+        title: "",
+        loading: false
       });
     });
   };
-
+  
   render() {
     const { modules } = this.state;
-        return (
-          <div>
-            <input
-              className="newTitle"
-              autoFocus
-              type="text"
-              placeholder="Add new Module"
-              onChange={this.handleTitleChange}
-              value={this.state.title}
-            />
-            <button onClick={this.addModule}>Add module</button>
-            {modules.length > 0 ? (
-              <ul>
-                {modules.map(module => (
-                  <li key={module._id}>{module.title}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>There are no modules yet</p>
-            )}
-          </div>
-        );
+    if (this.state.loading) {
+      return <div className="loader" />;
+    } else {
+      return (
+        <div>
+          <input
+            className="newTitle"
+            autoFocus
+            type="text"
+            placeholder="Add new Module"
+            onChange={this.handleTitleChange}
+            value={this.state.title}
+          />
+          <button onClick={this.addModule}>Add module</button>
+          {modules.length > 0 ? (
+            <ul>
+              {modules.map(module => (
+                <li key={module._id}>
+                  {module.title}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>There are no modules yet</p>
+          )}
+        </div>
+      );
     }
+  }
 }
 
 export default Modules;
