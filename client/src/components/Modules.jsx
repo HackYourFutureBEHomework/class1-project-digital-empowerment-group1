@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getModules, createModule } from "../api/modules";
+import { getModules, createModule, deleteModule } from "../api/modules";
 
 class Modules extends Component {
   constructor() {
@@ -23,6 +23,7 @@ class Modules extends Component {
       title: e.target.value
     });
   };
+  
   addModule = e => {
     e.preventDefault();
     this.setState({ loading: true });
@@ -33,6 +34,13 @@ class Modules extends Component {
         loading: false
       });
     });
+  };
+
+  handleDelete = (id) => {
+    deleteModule(id)
+      this.setState({
+        modules: this.state.modules.filter(m => m._id !== id)
+      });
   };
   
   render() {
@@ -56,6 +64,7 @@ class Modules extends Component {
               {modules.map(module => (
                 <li key={module._id}>
                   {module.title}
+                  <button onClick={()=>this.handleDelete(module._id)}>Delete</button>
                 </li>
               ))}
             </ul>

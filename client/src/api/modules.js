@@ -1,6 +1,7 @@
 const API_URL = 'http://localhost:4000';
 
 const headers = {
+  'Accept': 'application/json',
   'Content-Type': 'application/json'
 };
 
@@ -15,5 +16,11 @@ export const createModule = (title) => {
     body: JSON.stringify({
       title: title
     })
+  }).then(response => response.json());
+};
+
+export const deleteModule = (id) => {
+  return fetch(`${API_URL}/module/${id}`, {
+    method: 'DELETE'
   }).then(response => response.json());
 };
