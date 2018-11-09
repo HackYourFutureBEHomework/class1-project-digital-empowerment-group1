@@ -101,18 +101,19 @@ class Modules extends Component {
                       }}>Delete</button>
                     <button onClick={()=>this.handleEdit(module._id)}>Edit</button>
                   </div>
-                  <div className={this.state.edit ? 'show-list' : 'hide-list'}
-                    style={{ display: this.state.active === module._id ? 'block' : 'none' }}
-                  >
+                  <div className={this.state.edit ? 'show-list' : 'hide-list'}>
                     <input
+                      style={{ display: this.state.active === module._id ? 'block' : 'none' }}
                       onChange={this.handleTitleEditChange}
                       defaultValue={module.title}
                     />
                     <button
+                      style={{ display: this.state.active === module._id ? 'block' : 'none' }}
                       onClick={() => this.handleTitleEdit(module._id)}>
                       Update
                     </button>
                     <button
+                      style={{ display: this.state.active === module._id ? 'block' : 'none' }}
                       onClick={this.handleEdit}>Cancel</button>
                   </div>
                 </li>
