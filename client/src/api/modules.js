@@ -24,3 +24,13 @@ export const deleteModule = (id) => {
     method: 'DELETE'
   }).then(response => response.json());
 };
+
+export const updateModule = (id, title) => {
+  return fetch(`${API_URL}/module/${id}`, {
+    method: 'PUT',
+    headers: headers,
+    body: JSON.stringify({
+      title: title
+    })
+  }).then(response => response.json());
+};
