@@ -76,6 +76,13 @@ class Modules extends Component {
         });
     });
   };
+<<<<<<< HEAD
+  
+  checkedItem(event) {
+     console.log(event.target.checked);
+  }
+=======
+>>>>>>> 46ded5bfb37e909559d64172baa101ea7757e44c
 
   render() {
     const { modules } = this.state;
@@ -91,6 +98,14 @@ class Modules extends Component {
           />
           {modules.length > 0 ? (
             <ul>
+<<<<<<< HEAD
+              {modules.map((module) => (
+                <li className="moduleList" key={module._id}> 
+                   {/*checkbox code here below */}
+                  <input onChange={(event) => this.checkedItem(event)} type="checkbox"/>
+                  {module.title}
+                  <button className="deleteButton" onClick={()=>this.handleDelete(module._id)}>Delete</button>
+=======
               {modules.map(module => 
                 <li key={module._id} className={this.state.active === module._id ? 'active' : null}>
                   <div className={this.state.edit? 'hide-list': 'show-list'}>
@@ -116,6 +131,7 @@ class Modules extends Component {
                       style={{ display: this.state.active === module._id ? 'block' : 'none' }}
                       onClick={this.handleEdit}>Cancel</button>
                   </div>
+>>>>>>> 46ded5bfb37e909559d64172baa101ea7757e44c
                 </li>
               )}
             </ul>

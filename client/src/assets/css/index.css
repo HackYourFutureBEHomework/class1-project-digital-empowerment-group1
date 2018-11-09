@@ -31,6 +31,21 @@ h3 {
   font-size: 1.9rem;
 }
 
+input[type="checkbox"] {
+   display: inline;
+   width: 50px;
+}
+
+.moduleList {
+  list-style-type: none;
+  margin-top: 5px;
+}
+
+.deleteButton {
+  margin-left: 20px;
+}
+
+
 .loader {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
