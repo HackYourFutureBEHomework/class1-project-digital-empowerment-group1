@@ -8,7 +8,7 @@ html {
 }
 
 ul {
-	list-style: none;
+  list-style: none;
 }
 
 body {
@@ -29,6 +29,19 @@ h2 {
 
 h3 {
   font-size: 1.9rem;
+}
+
+input[type="checkbox"] {
+  display: inline;
+  width: 40px;
+}
+
+.moduleList {
+ margin-top: 5px;
+}
+
+div {
+  margin-left: 20rem;
 }
 
 .loader {

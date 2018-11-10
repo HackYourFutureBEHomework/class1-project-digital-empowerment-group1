@@ -77,6 +77,10 @@ class Modules extends Component {
     });
   };
 
+  checkedItem(event) {
+    console.log(event.target.checked);
+ }
+
   render() {
     const { modules } = this.state;
     if (this.state.loading) {
@@ -94,9 +98,10 @@ class Modules extends Component {
               {modules.map(module => 
                 <li key={module._id} className={this.state.active === module._id ? 'active' : null}>
                   <div className={this.state.edit? 'hide-list': 'show-list'}>
-                  {module.title}
-                  <button
-                    onClick={() => {if (window.confirm(`Delete (${module.title})?`))
+                    <input onChange={(event) => this.checkedItem(event)} type="checkbox"/>
+                    {module.title}
+                    <button
+                      onClick={() => {if (window.confirm(`Delete (${module.title})?`))
                       this.handleDelete(module._id);
                       }}>Delete</button>
                     <button onClick={()=>this.handleEdit(module._id)}>Edit</button>
