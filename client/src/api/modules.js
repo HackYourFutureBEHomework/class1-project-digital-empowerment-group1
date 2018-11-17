@@ -2,19 +2,23 @@ const API_URL = 'http://localhost:4000';
 
 const headers = {
   'Accept': 'application/json',
-  'Content-Type': 'application/json'
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': window.location.origin
 };
 
 export const getModules = () => {
   return fetch(`${API_URL}/module`).then(response => response.json());
 };
 
-export const createModule = (title) => {
+export const createModule = (title,  explanation, exercise, evaluation) => {
   return fetch(`${API_URL}/module`, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify({
-      title: title
+      title: title,
+      explanation : explanation,
+      exercise: exercise,
+      evaluation: evaluation
     })
   }).then(response => response.json());
 };
@@ -25,12 +29,15 @@ export const deleteModule = (id) => {
   }).then(response => response.json());
 };
 
-export const updateModule = (id, title) => {
+export const updateModule = (id, title, explanation, exercise, evaluation) => {
   return fetch(`${API_URL}/module/${id}`, {
     method: 'PUT',
     headers: headers,
     body: JSON.stringify({
-      title: title
+      title: title,
+      explanation : explanation,
+      exercise: exercise,
+      evaluation: evaluation
     })
   }).then(response => response.json());
 };
