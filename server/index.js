@@ -13,6 +13,7 @@ mongoose
     console.error(`Database error, exiting. Stack trace:\n${err}`);
     process.exit();
   });
+mongoose.set('useFindAndModify', false);
 
 const app = express();
 

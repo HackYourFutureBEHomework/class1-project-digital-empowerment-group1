@@ -21,7 +21,7 @@ exports.create = (req, res) => {
 };
 
 exports.destroy = (req, res) => {
-  Module.deleteOne({ _id: req.params.id })
+  Module.findOneAndDelete({ _id: req.params.id })
   .then((data) => { res.send(data); })
   .catch((err) => {
     res.status(500).send({

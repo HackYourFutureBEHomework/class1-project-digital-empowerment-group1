@@ -1,11 +1,18 @@
 import React, { Component } from "react";
-import {
-  getModules,
-  createModule,
-  deleteModule,
-  updateModule
-} from "../api/modules";
+import * as api from "../api/modules";
 import AddModule from "./AddModule";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import ModuleSteps from "./ModuleSteps";
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
 
 class Modules extends Component {
   constructor(props) {
@@ -16,14 +23,37 @@ class Modules extends Component {
       loading: false,
       edit: false,
       newTitle: "",
-      active: null
+      active: null,
+      explanation: "",
+      exercise: "",
+      evaluation: "",
+      newExplanation: "",
+      newExercise: "",
+      newEvaluation: "",
+      opened: false,
+      completed: true,
+      activeEvaluation: false
     };
-  };
+  }
 
   componentDidMount() {
     this.setState({ loading: true });
-    getModules().then(modules => {
+    api.getModules().then(modules => {
       this.setState({ modules: modules, loading: false });
+    });
+  }
+
+  onDragEnd = result => {
+    if (!result.destination) {
+      return;
+    }
+    const modules = reorder(
+      this.state.modules,
+      result.source.index,
+      result.destination.index
+    );
+    this.setState({
+      modules
     });
   };
 
@@ -33,20 +63,44 @@ class Modules extends Component {
     });
   };
 
-  addModule = e => {
-    e.preventDefault();
-    this.setState({ loading: true });
-    createModule(this.state.title).then(newModule => {
-      this.setState({
-        modules: this.state.modules.concat(newModule),
-        title: "",
-        loading: false
-      });
+  handleExplanationChange = value => {
+    this.setState({
+      explanation: value
     });
   };
 
+  handleExerciseChange = value => {
+    this.setState({
+      exercise: value
+    });
+  };
+
+  handleEvaluationChange = value => {
+    this.setState({
+      evaluation: value
+    });
+  };
+
+  addModule = e => {
+    e.preventDefault();
+    this.setState({ loading: true });
+    const { title, explanation, exercise, evaluation } = this.state;
+    api
+      .createModule(title, explanation, exercise, evaluation)
+      .then(newModule => {
+        this.setState({
+          modules: this.state.modules.concat(newModule),
+          title: "",
+          explanation: "",
+          exercise: "",
+          evaluation: "",
+          loading: false
+        });
+      });
+  };
+
   handleDelete = id => {
-    deleteModule(id);
+    api.deleteModule(id);
     this.setState({
       modules: this.state.modules.filter(m => m._id !== id)
     });
@@ -58,67 +112,228 @@ class Modules extends Component {
     });
   };
 
-  handleEdit = (id) => {
+  handleExplanationEditChange = value => {
+    this.setState({
+      newExplanation: value
+    });
+  };
+
+  handleExerciseEditChange = value => {
+    this.setState({
+      newExercise: value
+    });
+  };
+
+  handleEvaluationEditChange = value => {
+    this.setState({
+      newEvaluation: value
+    });
+  };
+
+  handleEdit = id => {
     this.setState({
       active: id,
       edit: !this.state.edit
     });
   };
 
-  handleTitleEdit = (id) => {
-    updateModule(id, this.state.newTitle).then(editedModules => {
-      const modules = [...this.state.modules];
-      const index = modules.findIndex((t) => t._id === id)
-      modules[index].title = editedModules.title
-      this.setState({
-        modules,
-        edit: false
+  handleContentEdit = module => {
+    const { newTitle, newExplanation, newExercise, newEvaluation } = this.state;
+    api
+      .updateModule(
+        module._id,
+        newTitle,
+        newExplanation,
+        newExercise,
+        newEvaluation
+      )
+      .then(editedModules => {
+        const modules = [...this.state.modules];
+        const index = modules.findIndex(t => t._id === module._id);
+        modules[index] = editedModules;
+        this.setState({
+          modules,
+          edit: false
         });
+      });
+  };
+
+  activeModule = id => {
+    this.setState({
+      active: id,
+      opened: true
     });
+  };
+
+  evaluationStep = module => {
+    api.completedModule(
+        module._id,
+        this.state.completed
+      )
+      .then(doneModules => {
+        const modules = [...this.state.modules];
+        const index = modules.findIndex(t => t._id === module._id);
+        modules[index].completed = doneModules.completed;
+        this.setState({
+          completed: !this.state.completed,
+          activeEvaluation: false
+        });
+      });
+  };
+
+  resetSteps = () => {
+    // TODO
   };
 
   render() {
     const { modules } = this.state;
+    const editorOptions = {
+      toolbar: [
+        [{ header: "1" }, { header: "2" }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link", "image", "video"],
+        ["clean"]
+      ]
+    };
     if (this.state.loading) {
       return <div className="loader" />;
     } else {
       return (
         <div>
-          <h2>Using a web browser</h2>
-          <AddModule
-            handleTitle={this.handleTitle}
-            addModule={this.addModule}
-          />
+          <div className={this.state.edit ? "hide-list" : "path-header"}>
+            <h2 className="path-title">Using a web browser</h2>
+            <AddModule
+              handleTitle={this.handleTitle}
+              addModule={this.addModule}
+              explanation={this.state.explanation}
+              exercise={this.state.exercise}
+              evaluation={this.state.evaluation}
+              handleExplanationChange={this.handleExplanationChange}
+              handleExerciseChange={this.handleExerciseChange}
+              handleEvaluationChange={this.handleEvaluationChange}
+            />
+          </div>
           {modules.length > 0 ? (
-            <ul>
-              {modules.map(module => 
-                <li key={module._id} className={this.state.active === module._id ? 'active' : null}>
-                  <div className={this.state.edit? 'hide-list': 'show-list'}>
-                  {module.title}
-                  <button
-                    onClick={() => {if (window.confirm(`Delete (${module.title})?`))
-                      this.handleDelete(module._id);
-                      }}>Delete</button>
-                    <button onClick={()=>this.handleEdit(module._id)}>Edit</button>
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              <Droppable droppableId="droppable">
+                {(provided) => (
+                  <div ref={provided.innerRef}>
+                    {modules.map((module, index) => (
+                      <Draggable
+                        key={module._id}
+                        draggableId={module._id}
+                        index={index}
+                        className={
+                          this.state.active === module._id ? "active" : null
+                        }>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}>
+                            <div
+                              className={
+                                this.state.edit ? "hide-list" : "show-list"
+                              }
+                              onClick={() => this.activeModule(module._id)}>
+                              <div className="content">
+                                <h3>{module.title}</h3>
+                                  <input
+                                    className="checkbox"
+                                    type="checkbox"
+                                    onChange={this.resetSteps}
+                                    checked={module.completed ? "checked" : ""}
+                                  />
+                                <button
+                                  className="delete"
+                                  onClick={() => {
+                                    if (
+                                      window.confirm(
+                                        `Delete (${module.title})?`
+                                      )
+                                    )
+                                      this.handleDelete(module._id);
+                                  }}>
+                                  Delete
+                                </button>
+                                <button
+                                  className="edit"
+                                  onClick={() => this.handleEdit(module._id)}>
+                                  Edit
+                                </button>
+                                {this.state.opened && (
+                                  <div
+                                    className={
+                                      this.state.active !== module._id
+                                        ? "hide-list"
+                                        : "show-list"
+                                    }>
+                                    <div className={this.state.completed ? 'show-list' : 'hide-list'} >
+                                    <ModuleSteps module={module} evaluationStep={()=>this.evaluationStep(module)} />
+                                  </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div
+                              className={
+                                this.state.edit ? "show-edit" : "hide-list"
+                              }>
+                              <div
+                                style={{
+                                  display:
+                                    this.state.active === module._id
+                                      ? "block"
+                                      : "none"
+                                }}>
+                                <input
+                                  className="edit-input"
+                                  onChange={this.handleTitleEditChange}
+                                  defaultValue={module.title}
+                                />
+                                <h5>Explanation content</h5>
+                                <ReactQuill
+                                  defaultValue={module.explanation}
+                                  onChange={this.handleExplanationEditChange}
+                                  modules={editorOptions}
+                                />
+                                <h5>Exercise content</h5>
+                                <ReactQuill
+                                  defaultValue={module.exercise}
+                                  onChange={this.handleExerciseEditChange}
+                                  modules={editorOptions}
+                                />
+                                <h5>Evaluation content</h5>
+                                <ReactQuill
+                                  defaultValue={module.evaluation}
+                                  onChange={this.handleEvaluationEditChange}
+                                  modules={editorOptions}
+                                  bounds={"#quill"}
+                                />
+                                <button
+                                  className="update"
+                                  onClick={() =>
+                                    this.handleContentEdit(module)
+                                  }>
+                                  Update
+                                </button>
+                                <button
+                                  className="cancel"
+                                  onClick={this.handleEdit}>
+                                  Cancel
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
                   </div>
-                  <div className={this.state.edit ? 'show-list' : 'hide-list'}>
-                    <input
-                      style={{ display: this.state.active === module._id ? 'block' : 'none' }}
-                      onChange={this.handleTitleEditChange}
-                      defaultValue={module.title}
-                    />
-                    <button
-                      style={{ display: this.state.active === module._id ? 'block' : 'none' }}
-                      onClick={() => this.handleTitleEdit(module._id)}>
-                      Update
-                    </button>
-                    <button
-                      style={{ display: this.state.active === module._id ? 'block' : 'none' }}
-                      onClick={this.handleEdit}>Cancel</button>
-                  </div>
-                </li>
-              )}
-            </ul>
+                )}
+              </Droppable>
+            </DragDropContext>
           ) : (
             <p>There are no modules yet</p>
           )}

@@ -9,6 +9,7 @@ html {
 
 ul {
 	list-style: none;
+  padding-left: 0;
 }
 
 body {
@@ -17,6 +18,7 @@ body {
 
 p {
   line-height: 1.6;
+  padding-left: 40px;
 }
 
 h1 {
@@ -29,6 +31,31 @@ h2 {
 
 h3 {
   font-size: 1.9rem;
+}
+
+h4 {
+  font-size: 1.6rem;
+  padding-left: 10px;
+}
+
+#root {
+	text-align: center;
+  width: 67%;
+  margin: 30px auto;
+  padding-top: 30px;
+}
+
+.add-module {
+  margin-top: 24px;
+}
+
+.path-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.path-title {
+  margin: 22px 0 0 0;
 }
 
 .loader {
@@ -53,4 +80,109 @@ h3 {
 
 .hide-list {
   display: none;
+}
+
+.show-edit {
+  width: 60%;
+  margin: auto;
+}
+
+.show-list {
+  margin: auto;
+}
+
+.hide-module {
+  display: none;
+}
+.edit-input {
+	height: 28px;
+	margin: 0 auto 5px;
+	border-radius: 0.5rem;
+	background: #f7f7f7;
+	outline: none;
+  text-align: center;
+}
+
+.cancel {
+	background: url(../images/cancel.png) center no-repeat;
+}
+
+.update {
+	background: url(../images/update.png) center no-repeat;
+}
+
+.update,
+.cancel {
+	color: transparent;
+	padding: 15px 45px;
+	border: 0;
+	outline: none;
+  margin-top: 20px;
+}
+
+.delete {
+	background: url(../images/delete.png) center no-repeat;
+	color: transparent;
+	margin: -57px 0px 0px 0px;
+	padding: 16px 0px 16px 0px;
+	border: 0;
+	outline: none;
+	float: right;
+}
+
+.edit {
+	background: url(../images/edit.png) center no-repeat;
+	color: transparent;
+	margin: -57px 46px 0px 0px;
+	padding: 16px 0px 16px 0px;
+	border: 0;
+	outline: none;
+	float: right;
+}
+
+.module__contents__stage strong {
+  font-weight: bold;
+}
+
+.module__contents__stage em {
+  font-style: italic;
+}
+
+.module__contents__stage u {
+  text-decoration: underline;
+}
+
+.module__contents__stage img {
+  max-width: 100%;
+}
+
+.module__contents__stage iframe {
+  width: 100%;
+  height: 48rem;
+}
+
+.checkbox {
+	transform: scale(2.1);
+	float: right;
+	width: auto;
+  margin: -39px 95px 0px 0px;
+}
+
+.content {
+  border-radius: 5px;
+  border: 1px solid black;
+  margin: 5px 0px 20px 0px;
+  padding: 15px 15px 15px 45px;
+  text-align: left;
+}
+
+.title {
+  background-color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ql-container.ql-snow {
+  height: 250px;
 }
