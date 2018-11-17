@@ -30,7 +30,9 @@ class Modules extends Component {
       newExplanation: "",
       newExercise: "",
       newEvaluation: "",
-      opened: false
+      opened: false,
+      completed: true,
+      activeEvaluation: false
     };
   }
 
@@ -137,7 +139,6 @@ class Modules extends Component {
 
   handleContentEdit = module => {
     const { newTitle, newExplanation, newExercise, newEvaluation } = this.state;
-    if (newTitle === module.title || newExplanation === module.explanation || newExercise === module.exercise || newEvaluation === module.evaluation) return;
     api
       .updateModule(
         module._id,
@@ -162,6 +163,26 @@ class Modules extends Component {
       active: id,
       opened: true
     });
+  };
+
+  evaluationStep = module => {
+    api.completedModule(
+        module._id,
+        this.state.completed
+      )
+      .then(doneModules => {
+        const modules = [...this.state.modules];
+        const index = modules.findIndex(t => t._id === module._id);
+        modules[index].completed = doneModules.completed;
+        this.setState({
+          completed: !this.state.completed,
+          activeEvaluation: false
+        });
+      });
+  };
+
+  resetSteps = () => {
+    // TODO
   };
 
   render() {
@@ -196,7 +217,7 @@ class Modules extends Component {
           {modules.length > 0 ? (
             <DragDropContext onDragEnd={this.onDragEnd}>
               <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
+                {(provided) => (
                   <div ref={provided.innerRef}>
                     {modules.map((module, index) => (
                       <Draggable
@@ -206,7 +227,7 @@ class Modules extends Component {
                         className={
                           this.state.active === module._id ? "active" : null
                         }>
-                        {(provided, snapshot) => (
+                        {(provided) => (
                           <div
                             ref={provided.innerRef}
                             {...provided.draggableProps}
@@ -218,6 +239,12 @@ class Modules extends Component {
                               onClick={() => this.activeModule(module._id)}>
                               <div className="content">
                                 <h3>{module.title}</h3>
+                                  <input
+                                    className="checkbox"
+                                    type="checkbox"
+                                    onChange={this.resetSteps}
+                                    checked={module.completed ? "checked" : ""}
+                                  />
                                 <button
                                   className="delete"
                                   onClick={() => {
@@ -242,7 +269,9 @@ class Modules extends Component {
                                         ? "hide-list"
                                         : "show-list"
                                     }>
-                                    <ModuleSteps module={module} />
+                                    <div className={this.state.completed ? 'show-list' : 'hide-list'} >
+                                    <ModuleSteps module={module} evaluationStep={()=>this.evaluationStep(module)} />
+                                  </div>
                                   </div>
                                 )}
                               </div>
