@@ -4,17 +4,7 @@ export default class ModuleSteps extends Component {
   state = {
     activeExplanation: true,
     activeExercise: false,
-    activeEvaluation: false,
-    completed: false
-  };
-
-  resetSteps = () => {
-    this.setState({
-      activeExplanation: true,
-      activeExercise: false,
-      activeEvaluation: false,
-      completed: false
-    });
+    activeEvaluation: false
   };
 
   explanationStep = () => {
@@ -32,24 +22,11 @@ export default class ModuleSteps extends Component {
     });
   };
 
-  evaluationStep = () => {
-    this.setState({
-      activeEvaluation: false,
-      completed: true
-    });
-  };
-
   render() {
     const { module } = this.props;
     return (
       <div>
         <ul key={module._id}>
-          <input
-            className="checkbox"
-            type="checkbox"
-            onChange={this.resetSteps}
-            checked={this.state.completed ? "checked" : ""}
-          />
           <li>
             <h4>Explanation</h4>
             <div
@@ -75,7 +52,7 @@ export default class ModuleSteps extends Component {
                 this.state.activeEvaluation ? "show-list" : "hide-list"
               }>
               <div dangerouslySetInnerHTML={{ __html: module.evaluation }} />
-              <button onClick={this.evaluationStep}>Finish</button>
+              <button onClick={this.props.evaluationStep}>Finish</button>
             </div>
           </li>
         </ul>
