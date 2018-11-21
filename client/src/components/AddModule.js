@@ -3,6 +3,16 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Modal from "react-modal";
 
+const editorOptions = {
+  toolbar: [
+    [{ header: "1" }, { header: "2" }],
+    ["bold", "italic", "underline", "strike"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link", "image", "video"],
+    ["clean"]
+  ]
+};
+  
 const customStyles = {
   content: {
     top: "50%",
@@ -62,15 +72,7 @@ export default class AddModule extends Component {
   };
 
   render() {
-    const editorOptions = {
-      toolbar: [
-        [{ header: "1" }, { header: "2" }],
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["link", "image", "video"],
-        ["clean"]
-      ]
-    };
+    const { addModule, handleTitle, handleChange} = this.props;
     return (
       <div>
         <button className="add-module" onClick={this.openModal}>
@@ -89,7 +91,7 @@ export default class AddModule extends Component {
               autoFocus
               type="text"
               placeholder="Title"
-              onChange={this.props.handleTitle}
+              onChange={handleTitle}
             />
             <div
               className={
@@ -97,8 +99,7 @@ export default class AddModule extends Component {
               }>
               <h5>Explanation content</h5>
               <ReactQuill
-                defaultValue={this.props.explanation}
-                onChange={this.props.handleExplanationChange}
+                onChange={value => handleChange("explanation", value)}
                 modules={editorOptions}
               />
             </div>
@@ -108,8 +109,7 @@ export default class AddModule extends Component {
               }>
               <h5>Exercise content</h5>
               <ReactQuill
-                defaultValue={this.props.exercise}
-                onChange={this.props.handleExerciseChange}
+                onChange={value => handleChange("exercise", value)}
                 modules={editorOptions}
               />
             </div>
@@ -119,8 +119,7 @@ export default class AddModule extends Component {
               }>
               <h5>Evaluation content</h5>
               <ReactQuill
-                defaultValue={this.props.evaluation}
-                onChange={this.props.handleEvaluationChange}
+                onChange={value => handleChange("evaluation", value)}
                 modules={editorOptions}
               />
             </div>
@@ -129,7 +128,7 @@ export default class AddModule extends Component {
             <button onClick={this.EvaluationChange}>Evaluation</button>
           </div>
           <br />
-          <button onClick={this.props.addModule}>Add module</button>
+          <button onClick={addModule}>Add module</button>
         </Modal>
       </div>
     );
