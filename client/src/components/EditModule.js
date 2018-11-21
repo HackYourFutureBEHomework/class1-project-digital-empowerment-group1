@@ -13,38 +13,13 @@ const editorOptions = {
 };
 
 export default class EditModule extends Component {
-  state = {
-    activeExplanation: true,
-    activeExercise: false,
-    activeEvaluation: false
-  };
-
-  ExplanationChange = () => {
-    this.setState({
-      activeExplanation: true,
-      activeExercise: false,
-      activeEvaluation: false
-    });
-  };
-
-  ExerciseChange = () => {
-    this.setState({
-      activeExplanation: false,
-      activeExercise: true,
-      activeEvaluation: false
-    });
-  };
-  
-  EvaluationChange = () => {
-    this.setState({
-      activeExplanation: false,
-      activeExercise: false,
-      activeEvaluation: true
-    });
-  };
-
   render() {
-    const { module, handleChange, handleTitleEditChange, handleContentEdit, handleEdit } = this.props;
+    const {
+      state, module,
+      handleChange, handleTitleEditChange, 
+      handleContentEdit, handleEdit,
+      explanationChange, exerciseChange,
+      evaluationChange } = this.props;
     return (
       <div>
         <div>
@@ -53,7 +28,7 @@ export default class EditModule extends Component {
           onChange={handleTitleEditChange}
           defaultValue={module.title}
         />
-        <div className={this.state.activeExplanation ? "show-module" : "hide-module"}>
+        <div className={state.activeExplanation ? "show-module" : "hide-module"}>
           <h5>Explanation content</h5>
           <ReactQuill
             modules={editorOptions}
@@ -61,7 +36,7 @@ export default class EditModule extends Component {
             defaultValue={module.explanation}
           />
         </div>
-        <div className={this.state.activeExercise ? "show-module" : "hide-module"}>
+        <div className={state.activeExercise ? "show-module" : "hide-module"}>
           <h5>Exercise content</h5>
           <ReactQuill
             modules={editorOptions}
@@ -69,7 +44,7 @@ export default class EditModule extends Component {
             defaultValue={module.exercise}
           />
         </div>
-        <div className={this.state.activeEvaluation ? "show-module" : "hide-module"}>
+        <div className={state.activeEvaluation ? "show-module" : "hide-module"}>
           <h5>Evaluation content</h5>
           <ReactQuill
             modules={editorOptions}
@@ -77,9 +52,9 @@ export default class EditModule extends Component {
             defaultValue={module.evaluation}
           />
         </div>
-          <button onClick={this.ExplanationChange}>Explanation</button>
-          <button onClick={this.ExerciseChange}>Exercise</button>
-          <button onClick={this.EvaluationChange}>Evaluation</button>
+          <button onClick={explanationChange}>Explanation</button>
+          <button onClick={exerciseChange}>Exercise</button>
+          <button onClick={evaluationChange}>Evaluation</button>
         </div>
         <button className="update" onClick={() => handleContentEdit(module)}>
           Update

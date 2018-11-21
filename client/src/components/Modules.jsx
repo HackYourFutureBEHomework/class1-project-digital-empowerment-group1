@@ -15,18 +15,17 @@ class Modules extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
       modules: [],
       loading: false,
+      title: "",
       newTitle: "",
-      explanation: "",
-      exercise: "",
-      evaluation: "",
       completed: true,
+      activeExplanation: true,
+      activeExercise: false,
       activeEvaluation: false,
       isOpen: false,
       isEdit: false,
-      activeModuleId: null,
+      activeModuleId: null
     };
   }
 
@@ -54,24 +53,6 @@ class Modules extends Component {
   handleTitle = e => {
     this.setState({
       title: e.target.value
-    });
-  };
-
-  handleExplanationChange = value => {
-    this.setState({
-      explanation: value
-    });
-  };
-
-  handleExerciseChange = value => {
-    this.setState({
-      exercise: value
-    });
-  };
-
-  handleEvaluationChange = value => {
-    this.setState({
-      evaluation: value
     });
   };
 
@@ -159,8 +140,28 @@ class Modules extends Component {
     });
   };
 
-  resetSteps = () => {
-    // TODO
+  explanationChange = () => {
+    this.setState({
+      activeExplanation: true,
+      activeExercise: false,
+      activeEvaluation: false
+    });
+  };
+
+  exerciseChange = () => {
+    this.setState({
+      activeExplanation: false,
+      activeExercise: true,
+      activeEvaluation: false
+    });
+  };
+  
+  evaluationChange = () => {
+    this.setState({
+      activeExplanation: false,
+      activeExercise: false,
+      activeEvaluation: true
+    });
   };
 
   render() {
@@ -173,11 +174,12 @@ class Modules extends Component {
           <div className={this.state.edit ? "hide-list" : "path-header"}>
             <h2 className="path-title">Using a web browser</h2>
             <AddModule
+              state={this.state}
               handleTitle={this.handleTitle}
               addModule={this.addModule}
-              explanation={this.state.explanation}
-              exercise={this.state.exercise}
-              evaluation={this.state.evaluation}
+              explanationChange={this.explanationChange}
+              exerciseChange={this.exerciseChange}
+              evaluationChange={this.evaluationChange}
               handleChange={this.handleChange}
             />
           </div>
@@ -192,6 +194,9 @@ class Modules extends Component {
               handleChange={this.handleChange}
               handleTitleEditChange={this.handleTitleEditChange}
               activeModule={this.activeModule}
+              explanationChange={this.explanationChange}
+              exerciseChange={this.exerciseChange}
+              evaluationChange={this.evaluationChange}
               />
           ) : (
             <p>There are no modules yet</p>
