@@ -16,7 +16,7 @@ class Modules extends Component {
     super(props);
     this.state = {
       modules: [],
-      loading: false,
+      loading: true,
       title: "",
       newTitle: "",
       completed: true,
@@ -30,7 +30,6 @@ class Modules extends Component {
   }
 
   componentDidMount() {
-    this.setState({ loading: true });
     api.getModules().then(modules => {
       this.setState({ modules: modules, loading: false });
     });
@@ -58,7 +57,6 @@ class Modules extends Component {
 
   addModule = e => {
     e.preventDefault();
-    this.setState({ loading: true });
     const { title, explanation, exercise, evaluation } = this.state;
     api
       .createModule(title, explanation, exercise, evaluation)
@@ -69,7 +67,6 @@ class Modules extends Component {
           explanation: "",
           exercise: "",
           evaluation: "",
-          loading: false
         });
       });
   };
