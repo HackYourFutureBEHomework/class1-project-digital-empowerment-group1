@@ -16,7 +16,7 @@ class Modules extends Component {
     super(props);
     this.state = {
       modules: [],
-      loading: true,
+      isLoading: true,
       title: "",
       newTitle: "",
       completed: true,
@@ -25,14 +25,17 @@ class Modules extends Component {
       activeEvaluation: false,
       isOpen: false,
       isEdit: false,
-      activeModuleId: null
+      activeModuleId: undefined
     };
   }
 
-  componentDidMount() {
-    api.getModules().then(modules => {
-      this.setState({ modules: modules, loading: false });
-    });
+  async componentDidMount() {
+    const modules = await api.getModules();
+    let activeModuleId;
+    if (modules.length > 0) {
+      activeModuleId = modules[0]._id;
+    }
+    this.setState({ modules, activeModuleId, isLoading: false });
   }
 
   onDragEnd = result => {
@@ -57,6 +60,7 @@ class Modules extends Component {
 
   addModule = e => {
     e.preventDefault();
+    this.setState({ isLoading: true });
     const { title, explanation, exercise, evaluation } = this.state;
     api
       .createModule(title, explanation, exercise, evaluation)
@@ -67,6 +71,7 @@ class Modules extends Component {
           explanation: "",
           exercise: "",
           evaluation: "",
+          isLoading: false
         });
       });
   };
@@ -152,7 +157,7 @@ class Modules extends Component {
       activeEvaluation: false
     });
   };
-  
+
   evaluationChange = () => {
     this.setState({
       activeExplanation: false,
@@ -163,44 +168,41 @@ class Modules extends Component {
 
   render() {
     const { modules } = this.state;
-    if (this.state.loading) {
-      return <div className="loader" />;
-    } else {
-      return (
-        <div>
-          <div className={this.state.edit ? "hide-list" : "path-header"}>
-            <h2 className="path-title">Using a web browser</h2>
-            <AddModule
-              state={this.state}
-              handleTitle={this.handleTitle}
-              addModule={this.addModule}
-              explanationChange={this.explanationChange}
-              exerciseChange={this.exerciseChange}
-              evaluationChange={this.evaluationChange}
-              handleChange={this.handleChange}
-            />
-          </div>
-          {modules.length > 0 ? (
-            <Module
-              state={this.state}
-              handleDelete={this.handleDelete} 
-              handleContentEdit={this.handleContentEdit}
-              evaluationStep={this.evaluationStep}
-              onDragEnd={this.onDragEnd}
-              handleEdit={this.handleEdit}
-              handleChange={this.handleChange}
-              handleTitleEditChange={this.handleTitleEditChange}
-              activeModule={this.activeModule}
-              explanationChange={this.explanationChange}
-              exerciseChange={this.exerciseChange}
-              evaluationChange={this.evaluationChange}
-              />
-          ) : (
-            <p>There are no modules yet</p>
-          )}
+    if (this.state.isLoading) return <div className="loader" />;
+    return (
+      <div>
+        <div className={this.state.edit ? "hide-list" : "path-header"}>
+          <h2 className="path-title">Using a web browser</h2>
+          <AddModule
+            state={this.state}
+            handleTitle={this.handleTitle}
+            addModule={this.addModule}
+            explanationChange={this.explanationChange}
+            exerciseChange={this.exerciseChange}
+            evaluationChange={this.evaluationChange}
+            handleChange={this.handleChange}
+          />
         </div>
-      );
-    }
+        {modules.length > 0 ? (
+          <Module
+            state={this.state}
+            handleDelete={this.handleDelete}
+            handleContentEdit={this.handleContentEdit}
+            evaluationStep={this.evaluationStep}
+            onDragEnd={this.onDragEnd}
+            handleEdit={this.handleEdit}
+            handleChange={this.handleChange}
+            handleTitleEditChange={this.handleTitleEditChange}
+            activeModule={this.activeModule}
+            explanationChange={this.explanationChange}
+            exerciseChange={this.exerciseChange}
+            evaluationChange={this.evaluationChange}
+          />
+        ) : (
+          <p>There are no modules yet</p>
+        )}
+      </div>
+    );
   }
 }
 
