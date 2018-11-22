@@ -17,7 +17,8 @@ export default class Module extends Component {
       activeModule, onDragEnd,
       handleDelete, evaluationStep,
       handleContentEdit, explanationChange,
-      exerciseChange, evaluationChange
+      exerciseChange, evaluationChange,
+      explanationStep, exerciseStep
     } = this.props;
     return (
       <DragDropContext onDragEnd={onDragEnd}>
@@ -58,7 +59,10 @@ export default class Module extends Component {
                             <div className={ state.activeModuleId !== module._id ? "hide-list" : "show-list"}>
                               <div className={ state.completed ? "show-list" : "hide-list" }>
                                 <ModuleSteps
+                                  state={state}
                                   module={module}
+                                  explanationStep={explanationStep}
+                                  exerciseStep={exerciseStep}
                                   evaluationStep={() => evaluationStep(module)}
                                 />
                               </div>

@@ -130,6 +130,21 @@ class Modules extends Component {
       });
   };
 
+  explanationStep = () => {
+    this.setState({
+      activeExplanation: false,
+      activeExercise: true,
+      activeEvaluation: false
+    });
+  };
+
+  exerciseStep = () => {
+    this.setState({
+      activeExercise: false,
+      activeEvaluation: true
+    });
+  };
+
   evaluationStep = module => {
     api.completedModule(module._id, this.state.completed).then(doneModules => {
       const modules = [...this.state.modules];
@@ -189,6 +204,8 @@ class Modules extends Component {
             handleDelete={this.handleDelete}
             handleContentEdit={this.handleContentEdit}
             evaluationStep={this.evaluationStep}
+            explanationStep={this.explanationStep}
+            exerciseStep={this.exerciseStep}
             onDragEnd={this.onDragEnd}
             handleEdit={this.handleEdit}
             handleChange={this.handleChange}
