@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import * as api from "../api/modules";
 import AddModule from "./AddModule";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import ModuleSteps from "./ModuleSteps";
+import Module from "./Module";
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -12,35 +9,32 @@ const reorder = (list, startIndex, endIndex) => {
   result.splice(endIndex, 0, removed);
 
   return result;
+  //TODO: save result to db
+  //Create a new prop for position in db and the use .sort()
 };
 
 class Modules extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
       modules: [],
-      loading: false,
-      edit: false,
+      isLoading: true,
+      title: "",
       newTitle: "",
-      active: null,
-      explanation: "",
-      exercise: "",
-      evaluation: "",
-      newExplanation: "",
-      newExercise: "",
-      newEvaluation: "",
-      opened: false,
+      isEdit: false,
+      isOpen: false,
       completed: true,
-      activeEvaluation: false
+      activeExplanation: true,
+      activeExercise: false,
+      activeEvaluation: false,
+      activeModuleId: undefined,
+      // currentModelIdx:,
     };
   }
 
-  componentDidMount() {
-    this.setState({ loading: true });
-    api.getModules().then(modules => {
-      this.setState({ modules: modules, loading: false });
-    });
+  async componentDidMount() {
+    const modules = await api.getModules();
+    this.setState({ modules, isLoading: false });
   }
 
   onDragEnd = result => {
@@ -63,27 +57,9 @@ class Modules extends Component {
     });
   };
 
-  handleExplanationChange = value => {
-    this.setState({
-      explanation: value
-    });
-  };
-
-  handleExerciseChange = value => {
-    this.setState({
-      exercise: value
-    });
-  };
-
-  handleEvaluationChange = value => {
-    this.setState({
-      evaluation: value
-    });
-  };
-
   addModule = e => {
     e.preventDefault();
-    this.setState({ loading: true });
+    this.setState({ isLoading: true });
     const { title, explanation, exercise, evaluation } = this.state;
     api
       .createModule(title, explanation, exercise, evaluation)
@@ -94,15 +70,24 @@ class Modules extends Component {
           explanation: "",
           exercise: "",
           evaluation: "",
-          loading: false
+          isLoading: false
         });
+        this.activeModule(newModule._id)
+        this.explanationChange()
       });
   };
 
   handleDelete = id => {
     api.deleteModule(id);
     this.setState({
-      modules: this.state.modules.filter(m => m._id !== id)
+      modules: this.state.modules.filter(m => m._id !== id),
+      activeExplanation: true
+    });
+  };
+
+  handleChange = (step, value) => {
+    this.setState({
+      [step]: value
     });
   };
 
@@ -112,28 +97,17 @@ class Modules extends Component {
     });
   };
 
-  handleExplanationEditChange = value => {
-    this.setState({
-      newExplanation: value
-    });
-  };
-
-  handleExerciseEditChange = value => {
-    this.setState({
-      newExercise: value
-    });
-  };
-
-  handleEvaluationEditChange = value => {
-    this.setState({
-      newEvaluation: value
-    });
-  };
-
   handleEdit = id => {
     this.setState({
-      active: id,
-      edit: !this.state.edit
+      activeModuleId: id,
+      isEdit: !this.state.isEdit
+    });
+  };
+
+  activeModule = id => {
+    this.setState({
+      activeModuleId: id,
+      isOpen: true
     });
   };
 
@@ -153,193 +127,122 @@ class Modules extends Component {
         modules[index] = editedModules;
         this.setState({
           modules,
-          edit: false
+          isEdit: false
         });
       });
   };
 
-  activeModule = id => {
+  explanationStep = () => {
     this.setState({
-      active: id,
-      opened: true
+      activeExplanation: false,
+      activeExercise: true,
+      activeEvaluation: false
+    });
+  };
+
+  exerciseStep = () => {
+    this.setState({
+      activeExercise: false,
+      activeEvaluation: true
     });
   };
 
   evaluationStep = module => {
-    api.completedModule(
-        module._id,
-        this.state.completed
-      )
-      .then(doneModules => {
-        const modules = [...this.state.modules];
-        const index = modules.findIndex(t => t._id === module._id);
-        modules[index].completed = doneModules.completed;
-        this.setState({
-          completed: !this.state.completed,
-          activeEvaluation: false
-        });
+    api.completedModule(module._id, this.state.completed).then(doneModules => {
+      const modules = [...this.state.modules];
+      const index = modules.findIndex(t => t._id === module._id);
+      modules[index].completed = doneModules.completed;
+      const nextModule = modules[index + 1];
+      let newModuleId;
+      if (nextModule) {
+        newModuleId = nextModule._id;
+      }
+      this.setState({
+        activeEvaluation: false,
+        activeModuleId: newModuleId,
+        isOpen: true,
+        completed: true,
+        activeExplanation: true
       });
+    });
+  };
+  
+  resetSteps = module => {
+    api.completedModule(module._id, this.state.completed).then(notDoneModules => {
+      const modules = [...this.state.modules];
+      const index = modules.findIndex(t => t._id === module._id);
+      modules[index].completed = notDoneModules.completed;
+      this.setState({
+        completed: !this.state.completed, //false is another option
+        activeExplanation: true,
+      });
+    });
   };
 
-  resetSteps = () => {
-    // TODO
+  explanationChange = () => {
+    this.setState({
+      activeExplanation: true,
+      activeExercise: false,
+      activeEvaluation: false
+    });
+  };
+
+  exerciseChange = () => {
+    this.setState({
+      activeExplanation: false,
+      activeExercise: true,
+      activeEvaluation: false
+    });
+  };
+
+  evaluationChange = () => {
+    this.setState({
+      activeExplanation: false,
+      activeExercise: false,
+      activeEvaluation: true
+    });
   };
 
   render() {
     const { modules } = this.state;
-    const editorOptions = {
-      toolbar: [
-        [{ header: "1" }, { header: "2" }],
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["link", "image", "video"],
-        ["clean"]
-      ]
-    };
-    if (this.state.loading) {
-      return <div className="loader" />;
-    } else {
-      return (
-        <div>
-          <div className={this.state.edit ? "hide-list" : "path-header"}>
-            <h2 className="path-title">Using a web browser</h2>
-            <AddModule
-              handleTitle={this.handleTitle}
-              addModule={this.addModule}
-              explanation={this.state.explanation}
-              exercise={this.state.exercise}
-              evaluation={this.state.evaluation}
-              handleExplanationChange={this.handleExplanationChange}
-              handleExerciseChange={this.handleExerciseChange}
-              handleEvaluationChange={this.handleEvaluationChange}
-            />
-          </div>
-          {modules.length > 0 ? (
-            <DragDropContext onDragEnd={this.onDragEnd}>
-              <Droppable droppableId="droppable">
-                {(provided) => (
-                  <div ref={provided.innerRef}>
-                    {modules.map((module, index) => (
-                      <Draggable
-                        key={module._id}
-                        draggableId={module._id}
-                        index={index}
-                        className={
-                          this.state.active === module._id ? "active" : null
-                        }>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}>
-                            <div
-                              className={
-                                this.state.edit ? "hide-list" : "show-list"
-                              }
-                              onClick={() => this.activeModule(module._id)}>
-                              <div className="content">
-                                <h3>{module.title}</h3>
-                                  <input
-                                    className="checkbox"
-                                    type="checkbox"
-                                    onChange={this.resetSteps}
-                                    checked={module.completed ? "checked" : ""}
-                                  />
-                                <button
-                                  className="delete"
-                                  onClick={() => {
-                                    if (
-                                      window.confirm(
-                                        `Delete (${module.title})?`
-                                      )
-                                    )
-                                      this.handleDelete(module._id);
-                                  }}>
-                                  Delete
-                                </button>
-                                <button
-                                  className="edit"
-                                  onClick={() => this.handleEdit(module._id)}>
-                                  Edit
-                                </button>
-                                {this.state.opened && (
-                                  <div
-                                    className={
-                                      this.state.active !== module._id
-                                        ? "hide-list"
-                                        : "show-list"
-                                    }>
-                                    <div className={this.state.completed ? 'show-list' : 'hide-list'} >
-                                    <ModuleSteps module={module} evaluationStep={()=>this.evaluationStep(module)} />
-                                  </div>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                            <div
-                              className={
-                                this.state.edit ? "show-edit" : "hide-list"
-                              }>
-                              <div
-                                style={{
-                                  display:
-                                    this.state.active === module._id
-                                      ? "block"
-                                      : "none"
-                                }}>
-                                <input
-                                  className="edit-input"
-                                  onChange={this.handleTitleEditChange}
-                                  defaultValue={module.title}
-                                />
-                                <h5>Explanation content</h5>
-                                <ReactQuill
-                                  defaultValue={module.explanation}
-                                  onChange={this.handleExplanationEditChange}
-                                  modules={editorOptions}
-                                />
-                                <h5>Exercise content</h5>
-                                <ReactQuill
-                                  defaultValue={module.exercise}
-                                  onChange={this.handleExerciseEditChange}
-                                  modules={editorOptions}
-                                />
-                                <h5>Evaluation content</h5>
-                                <ReactQuill
-                                  defaultValue={module.evaluation}
-                                  onChange={this.handleEvaluationEditChange}
-                                  modules={editorOptions}
-                                  bounds={"#quill"}
-                                />
-                                <button
-                                  className="update"
-                                  onClick={() =>
-                                    this.handleContentEdit(module)
-                                  }>
-                                  Update
-                                </button>
-                                <button
-                                  className="cancel"
-                                  onClick={this.handleEdit}>
-                                  Cancel
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          ) : (
-            <p>There are no modules yet</p>
-          )}
+    if (this.state.isLoading) return <div className="loader" />;
+    return (
+      <div>
+        <div className={this.state.edit ? "hide-list" : "path-header"}>
+          <h2 className="path-title">Using a web browser</h2>
+          <AddModule
+            state={this.state}
+            handleTitle={this.handleTitle}
+            addModule={this.addModule}
+            explanationChange={this.explanationChange}
+            exerciseChange={this.exerciseChange}
+            evaluationChange={this.evaluationChange}
+            handleChange={this.handleChange}
+          />
         </div>
-      );
-    }
+        {modules.length > 0 ? (
+          <Module
+            state={this.state}
+            resetSteps={this.resetSteps}
+            handleDelete={this.handleDelete}
+            handleContentEdit={this.handleContentEdit}
+            evaluationStep={this.evaluationStep}
+            explanationStep={this.explanationStep}
+            exerciseStep={this.exerciseStep}
+            onDragEnd={this.onDragEnd}
+            handleEdit={this.handleEdit}
+            handleChange={this.handleChange}
+            handleTitleEditChange={this.handleTitleEditChange}
+            activeModule={this.activeModule}
+            explanationChange={this.explanationChange}
+            exerciseChange={this.exerciseChange}
+            evaluationChange={this.evaluationChange}
+          />
+        ) : (
+          <p>There are no modules yet</p>
+        )}
+      </div>
+    );
   }
 }
 
