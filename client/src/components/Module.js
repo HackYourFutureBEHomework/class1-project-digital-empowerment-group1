@@ -4,15 +4,10 @@ import ModuleSteps from "./ModuleSteps";
 import EditModule from "./EditModule";
 
 export default class Module extends Component {
-  resetSteps = () => {
-    // TODO
-  };
-
   render() {
     const {
-      state,
-      handleEdit,
-      handleChange,
+      state,resetSteps,
+      handleEdit, handleChange,
       handleTitleEditChange,
       activeModule, onDragEnd,
       handleDelete, evaluationStep,
@@ -42,7 +37,7 @@ export default class Module extends Component {
                           <input
                             className="checkbox"
                             type="checkbox"
-                            onChange={this.resetSteps}
+                            onChange={() => resetSteps(module)}
                             checked={module.completed ? "checked" : ""}
                           />
                           <button

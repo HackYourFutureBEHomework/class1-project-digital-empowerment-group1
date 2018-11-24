@@ -160,6 +160,18 @@ class Modules extends Component {
       this.activeModule(this.state.activeModuleId)
     });
   };
+  
+  resetSteps = (module) => {
+    api.completedModule(module._id, this.state.completed).then(notDoneModules => {
+      const modules = [...this.state.modules];
+      const index = modules.findIndex(t => t._id === module._id);
+      modules[index].completed = notDoneModules.completed;
+      this.setState({
+        completed: !this.state.completed,
+        activeExplanation: true,
+      });
+    });
+  };
 
   explanationChange = () => {
     this.setState({
@@ -205,6 +217,7 @@ class Modules extends Component {
         {modules.length > 0 ? (
           <Module
             state={this.state}
+            resetSteps={this.resetSteps}
             handleDelete={this.handleDelete}
             handleContentEdit={this.handleContentEdit}
             evaluationStep={this.evaluationStep}
