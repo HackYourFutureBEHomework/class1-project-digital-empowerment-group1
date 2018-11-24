@@ -73,6 +73,7 @@ class Modules extends Component {
           isLoading: false
         });
         this.activeModule(newModule._id)
+        this.explanationChange()
       });
   };
 
