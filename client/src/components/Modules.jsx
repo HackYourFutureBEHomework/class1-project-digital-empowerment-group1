@@ -73,7 +73,7 @@ class Modules extends Component {
           evaluation: "",
           isLoading: false
         });
-    this.activeModule(newModule._id)
+        this.activeModule(newModule._id)
       });
   };
 
@@ -154,8 +154,10 @@ class Modules extends Component {
       modules[index].completed = doneModules.completed;
       this.setState({
         completed: !this.state.completed,
-        activeEvaluation: false
+        activeEvaluation: false,
+        activeModuleId: modules[index + 1]
       });
+      this.activeModule(this.state.activeModuleId)
     });
   };
 
