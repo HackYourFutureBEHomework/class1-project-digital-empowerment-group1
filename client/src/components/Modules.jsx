@@ -73,13 +73,15 @@ class Modules extends Component {
           evaluation: "",
           isLoading: false
         });
+    this.activeModule(newModule._id)
       });
   };
 
   handleDelete = id => {
     api.deleteModule(id);
     this.setState({
-      modules: this.state.modules.filter(m => m._id !== id)
+      modules: this.state.modules.filter(m => m._id !== id),
+      activeExplanation: true
     });
   };
 
