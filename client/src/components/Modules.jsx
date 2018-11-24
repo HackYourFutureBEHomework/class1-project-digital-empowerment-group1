@@ -8,7 +8,8 @@ const reorder = (list, startIndex, endIndex) => {
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
-  return result; //TODO: save result to db to get the same order after change
+  return result;
+  //TODO: save result to db
 };
 
 class Modules extends Component {
@@ -19,12 +20,12 @@ class Modules extends Component {
       isLoading: true,
       title: "",
       newTitle: "",
+      isEdit: false,
+      isOpen: false,
       completed: true,
       activeExplanation: true,
       activeExercise: false,
       activeEvaluation: false,
-      isOpen: false,
-      isEdit: false,
       activeModuleId: undefined
     };
   }
@@ -161,7 +162,7 @@ class Modules extends Component {
     });
   };
   
-  resetSteps = (module) => {
+  resetSteps = module => {
     api.completedModule(module._id, this.state.completed).then(notDoneModules => {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === module._id);
