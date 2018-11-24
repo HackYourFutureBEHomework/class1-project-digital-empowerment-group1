@@ -10,6 +10,7 @@ const reorder = (list, startIndex, endIndex) => {
 
   return result;
   //TODO: save result to db
+  //Create a new prop for position in db and the use .sort()
 };
 
 class Modules extends Component {
@@ -26,17 +27,14 @@ class Modules extends Component {
       activeExplanation: true,
       activeExercise: false,
       activeEvaluation: false,
-      activeModuleId: undefined
+      activeModuleId: undefined,
+      // currentModelIdx:,
     };
   }
 
   async componentDidMount() {
     const modules = await api.getModules();
-    let activeModuleId;
-    if (modules.length > 0) {
-      activeModuleId = modules[0]._id;
-    }
-    this.setState({ modules, activeModuleId, isLoading: false });
+    this.setState({ modules, isLoading: false });
   }
 
   onDragEnd = result => {
@@ -153,12 +151,18 @@ class Modules extends Component {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === module._id);
       modules[index].completed = doneModules.completed;
+      const nextModule = modules[index + 1];
+      let newModuleId;
+      if (nextModule) {
+        newModuleId = nextModule._id;
+      }
       this.setState({
-        completed: !this.state.completed,
         activeEvaluation: false,
-        activeModuleId: modules[index + 1]
+        activeModuleId: newModuleId,
+        isOpen: true,
+        completed: true,
+        activeExplanation: true
       });
-      this.activeModule(this.state.activeModuleId)
     });
   };
   
@@ -168,7 +172,7 @@ class Modules extends Component {
       const index = modules.findIndex(t => t._id === module._id);
       modules[index].completed = notDoneModules.completed;
       this.setState({
-        completed: !this.state.completed,
+        completed: !this.state.completed, //false is another option
         activeExplanation: true,
       });
     });
