@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button } from 'reactstrap';
 
 export default class ModuleSteps extends Component {
   render() {
@@ -13,7 +14,7 @@ export default class ModuleSteps extends Component {
                 state.activeExplanation ? "show-list" : "hide-list"
               }>
               <div dangerouslySetInnerHTML={{ __html: module.explanation }} />
-              <button onClick={explanationStep}>Next</button>
+              <Button outline color="secondary" onClick={explanationStep}>Next</Button>
             </div>
           </li>
           <li>
@@ -21,7 +22,7 @@ export default class ModuleSteps extends Component {
             <div
               className={state.activeExercise ? "show-list" : "hide-list"}>
               <div dangerouslySetInnerHTML={{ __html: module.exercise }} />
-              <button onClick={exerciseStep}>Next</button>
+              <Button outline color="secondary" onClick={exerciseStep}>Next</Button>
             </div>
           </li>
           <li>
@@ -31,7 +32,7 @@ export default class ModuleSteps extends Component {
                 state.activeEvaluation ? "show-list" : "hide-list"
               }>
               <div dangerouslySetInnerHTML={{ __html: module.evaluation }} />
-              <button onClick={evaluationStep}>Finish</button>
+              <Button outline color="success" onClick={evaluationStep}>Finish</Button>
             </div>
           </li>
         </ul>

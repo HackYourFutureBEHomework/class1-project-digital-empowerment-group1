@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as api from "../api/modules";
 import AddModule from "./AddModule";
 import Module from "./Module";
-
+import NavBar from '../shared/NavBar'
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -207,6 +207,8 @@ class Modules extends Component {
     if (this.state.isLoading) return <div className="loader" />;
     return (
       <div>
+        <NavBar />
+        <div className='content-container'>
         <div className={this.state.edit ? "hide-list" : "path-header"}>
           <h2 className="path-title">Using a web browser</h2>
           <AddModule
@@ -240,6 +242,7 @@ class Modules extends Component {
         ) : (
           <p>There are no modules yet</p>
         )}
+        </div>
       </div>
     );
   }

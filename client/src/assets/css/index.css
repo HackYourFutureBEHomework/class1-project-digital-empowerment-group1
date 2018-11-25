@@ -3,17 +3,20 @@ html {
   font-size: 62.5%;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
 ul {
-	list-style: none;
+  list-style: none;
   padding-left: 0;
 }
 
 body {
   font-size: 1.6rem;
+  background-color: #f6f6f5;
 }
 
 p {
@@ -31,18 +34,23 @@ h2 {
 
 h3 {
   font-size: 1.9rem;
+  font-weight: bold;
 }
 
 h4 {
   font-size: 1.6rem;
+  font-weight: bold;
   padding-left: 10px;
 }
 
+h5 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 2.5;
+}
+
 #root {
-	text-align: center;
-  width: 67%;
-  margin: 30px auto;
-  padding-top: 30px;
+  text-align: center;
 }
 
 .add-module {
@@ -52,6 +60,7 @@ h4 {
 .path-header {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 30px;
 }
 
 .path-title {
@@ -64,19 +73,31 @@ h4 {
   border-top: 10px solid #3498db;
   width: 60px;
   height: 60px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
+  -webkit-animation: spin 2s linear infinite;
+  /* Safari */
   animation: spin 2s linear infinite;
   margin: 20% auto;
 }
+
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .hide-list {
@@ -95,50 +116,51 @@ h4 {
 .hide-module {
   display: none;
 }
+
 .edit-input {
-	height: 28px;
-	margin: 0 auto 5px;
-	border-radius: 0.5rem;
-	background: #f7f7f7;
-	outline: none;
+  height: 28px;
+  margin: 0 auto 5px;
+  border-radius: 0.5rem;
+  background: #f7f7f7;
+  outline: none;
   text-align: center;
 }
 
 .cancel {
-	background: url(../images/cancel.png) center no-repeat;
+  background: url(../images/cancel.png) center no-repeat;
 }
 
 .update {
-	background: url(../images/update.png) center no-repeat;
+  background: url(../images/update.png) center no-repeat;
 }
 
 .update,
 .cancel {
-	color: transparent;
-	padding: 15px 45px;
-	border: 0;
-	outline: none;
+  color: transparent;
+  padding: 15px 45px;
+  border: 0;
+  outline: none;
   margin-top: 20px;
 }
 
 .delete {
-	background: url(../images/delete.png) center no-repeat;
-	color: transparent;
-	margin: -57px 0px 0px 0px;
-	padding: 16px 0px 16px 0px;
-	border: 0;
-	outline: none;
-	float: right;
+  background: url(../images/delete.png) center no-repeat;
+  color: transparent;
+  margin: -27px 0px 0px 0px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  float: right;
 }
 
 .edit {
-	background: url(../images/edit.png) center no-repeat;
-	color: transparent;
-	margin: -57px 46px 0px 0px;
-	padding: 16px 0px 16px 0px;
-	border: 0;
-	outline: none;
-	float: right;
+  background: url(../images/edit.png) center no-repeat;
+  color: transparent;
+  margin: -27px 41px 0px 0px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  float: right;
 }
 
 .module__contents__stage strong {
@@ -163,27 +185,72 @@ h4 {
 }
 
 .checkbox {
-	transform: scale(2.1);
-	float: right;
-	width: auto;
-  margin: -39px 95px 0px 0px;
+  transform: scale(2.1);
+  float: right;
+  width: auto;
+  margin: -20px 84px 0px 0px;
 }
 
 .content {
+  text-align: left;
   border-radius: 5px;
-  border: 1px solid black;
   margin: 5px 0px 20px 0px;
   padding: 15px 15px 15px 45px;
-  text-align: left;
+  background-color: white;
+  box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.6);
 }
 
 .title {
   background-color: white;
   font-size: 16px;
   font-weight: bold;
-  text-align: center;
 }
 
 .ql-container.ql-snow {
   height: 250px;
+}
+
+.btn {
+  font-size: 1.5rem;
+}
+
+.content-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.new-module {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.navbar {
+  padding: 40px 25px 20px 25px;
+  margin: 0px 0 10px 0;
+  background: linear-gradient(180deg,rgba(0, 0, 0, 0.473) 0,#f6f6f5 100%)
+}
+
+.navbar-brand {
+  font-size: 1.7rem;
+}
+
+.content-container {
+  width: 67%;
+  margin: 0 auto;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Button } from 'reactstrap';
 
 const editorOptions = {
   toolbar: [
@@ -21,7 +22,7 @@ export default class EditModule extends Component {
       explanationChange, exerciseChange,
       evaluationChange } = this.props;
     return (
-      <div>
+      <div className='edit-modal'>
         <div>
         <input
           className="edit-input"
@@ -52,11 +53,11 @@ export default class EditModule extends Component {
             defaultValue={module.evaluation}
           />
         </div>
-          <button onClick={explanationChange}>Explanation</button>
-          <button onClick={exerciseChange}>Exercise</button>
-          <button onClick={evaluationChange}>Evaluation</button>
+          <Button color="info" onClick={explanationChange}>Explanation</Button>
+          <Button color="info" onClick={exerciseChange}>Exercise</Button>
+          <Button color="info" onClick={evaluationChange}>Evaluation</Button>
         </div>
-        <button className="update" onClick={() => handleContentEdit(module)}>
+        <button className="update" disabled={state.newTitle.length < 3} onClick={() => handleContentEdit(module)}>
           Update
         </button>
         <button className="cancel" onClick={handleEdit}>
