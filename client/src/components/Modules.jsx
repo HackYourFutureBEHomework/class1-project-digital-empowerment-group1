@@ -128,6 +128,7 @@ class Modules extends Component {
           modules,
           isEdit: false
         });
+        this.explanationChange()  
       });
   };
 
