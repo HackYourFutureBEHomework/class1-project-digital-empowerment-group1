@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as api from "../api/modules";
 import AddModule from "./AddModule";
 import Module from "./Module";
-
+import NavBar from '../shared/NavBar'
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -28,7 +28,6 @@ class Modules extends Component {
       activeExercise: false,
       activeEvaluation: false,
       activeModuleId: undefined,
-      // currentModelIdx:,
     };
   }
 
@@ -147,10 +146,10 @@ class Modules extends Component {
     });
   };
 
-  evaluationStep = module => {
-    api.completedModule(module._id, this.state.completed).then(doneModules => {
+  evaluationStep = id => {
+    api.completedModule(id, this.state.completed).then(doneModules => {
       const modules = [...this.state.modules];
-      const index = modules.findIndex(t => t._id === module._id);
+      const index = modules.findIndex(t => t._id === id);
       modules[index].completed = doneModules.completed;
       const nextModule = modules[index + 1];
       let newModuleId;
@@ -162,18 +161,18 @@ class Modules extends Component {
         activeModuleId: newModuleId,
         isOpen: true,
         completed: true,
-        activeExplanation: true
+        activeExplanation: true,
       });
     });
   };
   
-  resetSteps = module => {
-    api.completedModule(module._id, this.state.completed).then(notDoneModules => {
+  resetSteps = id => {
+    api.completedModule(id, this.state.completed).then(notDoneModules => {
       const modules = [...this.state.modules];
-      const index = modules.findIndex(t => t._id === module._id);
+      const index = modules.findIndex(t => t._id === id);
       modules[index].completed = notDoneModules.completed;
       this.setState({
-        completed: !this.state.completed, //false is another option
+        completed: !this.state.completed,
         activeExplanation: true,
       });
     });
@@ -208,6 +207,8 @@ class Modules extends Component {
     if (this.state.isLoading) return <div className="loader" />;
     return (
       <div>
+        <NavBar />
+        <div className='content-container'>
         <div className={this.state.edit ? "hide-list" : "path-header"}>
           <h2 className="path-title">Using a web browser</h2>
           <AddModule
@@ -241,6 +242,7 @@ class Modules extends Component {
         ) : (
           <p>There are no modules yet</p>
         )}
+        </div>
       </div>
     );
   }

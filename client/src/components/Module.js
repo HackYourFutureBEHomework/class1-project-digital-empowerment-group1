@@ -6,7 +6,7 @@ import EditModule from "./EditModule";
 export default class Module extends Component {
   render() {
     const {
-      state,resetSteps,
+      state, resetSteps,
       handleEdit, handleChange,
       handleTitleEditChange,
       activeModule, onDragEnd,
@@ -37,7 +37,7 @@ export default class Module extends Component {
                           <input
                             className="checkbox"
                             type="checkbox"
-                            onChange={() => resetSteps(module)}
+                            onChange={() => resetSteps(module._id)}
                             checked={module.completed ? "checked" : ""}
                           />
                           <button
@@ -52,13 +52,13 @@ export default class Module extends Component {
                           </button>
                           {state.isOpen && (
                             <div className={ state.activeModuleId !== module._id ? "hide-list" : "show-list"}>
-                              <div className={ state.completed ? "show-list" : "hide-list" }>
+                              <div className={ module.completed ? "hide-list" : "show-list" }>
                                 <ModuleSteps
                                   state={state}
                                   module={module}
                                   explanationStep={explanationStep}
                                   exerciseStep={exerciseStep}
-                                  evaluationStep={() => evaluationStep(module)}
+                                  evaluationStep={() => evaluationStep(module._id)}
                                 />
                               </div>
                             </div>

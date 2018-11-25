@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Modal from "react-modal";
+import { Button } from 'reactstrap';
 
 const editorOptions = {
   toolbar: [
@@ -54,9 +55,9 @@ export default class AddModule extends Component {
     } = this.props;
     return (
       <div>
-        <button className="add-module" onClick={this.openModal}>
+        <Button color="primary" className="add-module" onClick={this.openModal}>
           Add Module
-        </button>
+        </Button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -64,9 +65,9 @@ export default class AddModule extends Component {
           style={customStyles}
           contentLabel="Modal">
           <h2 ref={subtitle => (this.subtitle = subtitle)}>Add a new module</h2>
-          <div>
+          <div className='new-module'>
             <input
-              className="newTitle"
+              className="title"
               autoFocus
               type="text"
               placeholder="Title"
@@ -102,12 +103,14 @@ export default class AddModule extends Component {
                 modules={editorOptions}
               />
             </div>
-            <button onClick={explanationChange}>Explanation</button>
-            <button onClick={exerciseChange}>Exercise</button>
-            <button onClick={evaluationChange}>Evaluation</button>
+            <div className='content-btn'>
+            <Button color="info" onClick={explanationChange}>Explanation</Button>
+            <Button color="info" onClick={exerciseChange}>Exercise</Button>
+            <Button color="info" onClick={evaluationChange}>Evaluation</Button>
+            </div>
           </div>
           <br />
-          <button onClick={addModule}>Add module</button>
+          <Button color="success" onClick={addModule} disabled={state.title.length < 3}>Add module</Button>
         </Modal>
       </div>
     );
