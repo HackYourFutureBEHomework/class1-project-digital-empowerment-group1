@@ -124,6 +124,7 @@ h5 {
   background: #f7f7f7;
   outline: none;
   text-align: center;
+  width: 100%;
 }
 
 .cancel {
@@ -238,6 +239,15 @@ h5 {
   padding: 20px;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+}
+
+.edit-overlay  {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
 .navbar {
