@@ -127,21 +127,10 @@ h5 {
   width: 100%;
 }
 
-.cancel {
-  background: url(../images/cancel.png) center no-repeat;
-}
-
-.update {
-  background: url(../images/update.png) center no-repeat;
-}
-
 .update,
 .cancel {
-  color: transparent;
-  padding: 15px 45px;
-  border: 0;
   outline: none;
-  margin-top: 20px;
+  margin: 20px 20px 0px 20px;
 }
 
 .delete {

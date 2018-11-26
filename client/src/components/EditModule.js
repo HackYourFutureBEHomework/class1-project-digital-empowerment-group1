@@ -61,12 +61,12 @@ export default class EditModule extends Component {
             />
           </div>
           </div>
-          <button className="update" disabled={state.newTitle.length < 3} onClick={() => handleContentEdit(module)}>
+          <Button className="update" color="success" disabled={state.newTitle.length < 3} onClick={() => handleContentEdit(module)}>
             Update
-          </button>
-          <button className="cancel" onClick={handleEdit}>
+          </Button>
+          <Button className="cancel" color="secondary" onClick={handleEdit}>
             Cancel
-          </button>
+          </Button>
         </div>
       </div>
     );
