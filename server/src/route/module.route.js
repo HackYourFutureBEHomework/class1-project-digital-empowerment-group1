@@ -1,4 +1,4 @@
-const modules = require('../controller/module.controller.js');
+const modules = require('../controller/module.controller');
 
 module.exports = (app) => {
   app.get('/module', modules.findAll);
