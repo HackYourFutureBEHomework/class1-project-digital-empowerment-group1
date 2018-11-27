@@ -124,23 +124,13 @@ h5 {
   background: #f7f7f7;
   outline: none;
   text-align: center;
-}
-
-.cancel {
-  background: url(../images/cancel.png) center no-repeat;
-}
-
-.update {
-  background: url(../images/update.png) center no-repeat;
+  width: 100%;
 }
 
 .update,
 .cancel {
-  color: transparent;
-  padding: 15px 45px;
-  border: 0;
   outline: none;
-  margin-top: 20px;
+  margin: 20px 20px 0px 20px;
 }
 
 .delete {
@@ -238,6 +228,15 @@ h5 {
   padding: 20px;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+}
+
+.edit-overlay  {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
 .navbar {

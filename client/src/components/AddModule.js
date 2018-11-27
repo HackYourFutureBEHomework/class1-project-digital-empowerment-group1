@@ -73,6 +73,12 @@ export default class AddModule extends Component {
               placeholder="Title"
               onChange={handleTitle}
             />
+            <hr/>
+            <div className='content-btn'>
+            <Button color="info" onClick={explanationChange}>Explanation</Button>
+            <Button color="info" onClick={exerciseChange}>Exercise</Button>
+            <Button color="info" onClick={evaluationChange}>Evaluation</Button>
+            </div>
             <div
               className={
                 state.activeExplanation ? "show-module" : "hide-module"
@@ -102,11 +108,6 @@ export default class AddModule extends Component {
                 onChange={value => handleChange("evaluation", value)}
                 modules={editorOptions}
               />
-            </div>
-            <div className='content-btn'>
-            <Button color="info" onClick={explanationChange}>Explanation</Button>
-            <Button color="info" onClick={exerciseChange}>Exercise</Button>
-            <Button color="info" onClick={evaluationChange}>Evaluation</Button>
             </div>
           </div>
           <br />
