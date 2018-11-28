@@ -7,8 +7,8 @@ const PathSchema = mongoose.Schema(
       required: true
     },
     modules: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Module'
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'Module'
     }]
   },
   {

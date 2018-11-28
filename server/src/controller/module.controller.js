@@ -1,5 +1,5 @@
 const Module = require('../model/module.model');
-const paths = require('./path.controller');
+const paths = require ('./path.controller');
 
 exports.findAll = (req, res) => {
   Module.find()

@@ -12,7 +12,7 @@ export const getPaths = () => {
 
 export const getPath = id => {
   return fetch(`${API_URL}/path/${id}`).then(response => response.json());
-};
+  };
 
 export const createPath = title => {
   return fetch(`${API_URL}/path`, {
@@ -30,7 +30,7 @@ export const deletePath = id => {
 
 export const updatePath = (id, path) => {
   return fetch(`${API_URL}/path/${id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: headers,
     body: JSON.stringify(path)
   }).then(response => response.json());
