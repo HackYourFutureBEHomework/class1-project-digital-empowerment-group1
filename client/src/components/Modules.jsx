@@ -3,6 +3,8 @@ import * as api from "../api/modules";
 import AddModule from "./AddModule";
 import Module from "./Module";
 import NavBar from '../shared/NavBar'
+import {getPath} from "../api/paths";
+
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -17,6 +19,7 @@ class Modules extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      path:null,
       modules: [],
       isLoading: true,
       title: "",
@@ -33,7 +36,15 @@ class Modules extends Component {
 
   async componentDidMount() {
     const modules = await api.getModules();
-    this.setState({ modules, isLoading: false });
+    this.setState({ modules});
+    const { pathId } = this.props.match.params;
+    const path = await getPath(pathId);
+      this.setState({
+      path,
+      modules: path.modules,
+      modulesAreLoading: false,
+      isLoading: false
+    });
   }
 
   onDragEnd = result => {
@@ -59,9 +70,10 @@ class Modules extends Component {
   addModule = e => {
     e.preventDefault();
     this.setState({ isLoading: true });
+    const pathId = this.state.path._id;
     const { title, explanation, exercise, evaluation } = this.state;
     api
-      .createModule(title, explanation, exercise, evaluation)
+      .createModule(pathId, title, explanation, exercise, evaluation)
       .then(newModule => {
         this.setState({
           modules: this.state.modules.concat(newModule),
@@ -204,14 +216,14 @@ class Modules extends Component {
   };
 
   render() {
-    const { modules } = this.state;
+    const { modules, path } = this.state;
     if (this.state.isLoading) return <div className="loader" />;
     return (
       <div>
         <NavBar />
         <div className='content-container'>
         <div className={this.state.edit ? "hide-list" : "path-header"}>
-          <h2 className="path-title">Using a web browser</h2>
+          <h2 className="path-title">{path.title}</h2>
           <AddModule
             state={this.state}
             handleTitle={this.handleTitle}

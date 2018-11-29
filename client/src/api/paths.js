@@ -28,11 +28,19 @@ export const deletePath = id => {
   }).then(response => response.json());
 };
 
-export const updatePath = (id, path) => {
+export const updatePath = (id, title) => {
   return fetch(`${API_URL}/path/${id}`, {
     method: 'PATCH',
     headers: headers,
-    body: JSON.stringify(path)
+    body: JSON.stringify({title: title})
   }).then(response => response.json());
 };
+
+// export const addModuleToPath = (pathId, body)=> {
+//   return fetch(`${API_URL}/${pathId}/module`, {
+//     method: 'POST',
+//     headers: headers,
+//     body: JSON.stringify(body)
+//   }).then(response => response.json());
+// };
 
