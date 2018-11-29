@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
 });
 
 require('./src/route/path.route')(app);
+require('./src/route/module.route')(app);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {

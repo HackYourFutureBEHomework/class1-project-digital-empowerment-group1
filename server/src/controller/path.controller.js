@@ -14,7 +14,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     Path.
     findById(req.params.pathId)
-    .populate('module')
+    .populate('modules')
       .then((path) => { res.send(path); })
       .catch((err) => {
         res.status(500).send({

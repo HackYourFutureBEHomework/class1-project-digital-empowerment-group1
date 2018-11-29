@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000/path';
+const API_URL = 'http://localhost:4000';
 
 const headers = {
   'Accept': 'application/json',
@@ -10,8 +10,8 @@ export const getModules = () => {
   return fetch(`${API_URL}/module`).then(response => response.json());
 };
 
-export const createModule = (title,  explanation, exercise, evaluation) => {
-  return fetch(`${API_URL}/module`, {
+export const createModule = (pathId, title,  explanation, exercise, evaluation) => {
+  return fetch(`${API_URL}/path/${pathId}/module`, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify({
@@ -31,7 +31,7 @@ export const deleteModule = (id) => {
 
 export const updateModule = (id, title, explanation, exercise, evaluation) => {
   return fetch(`${API_URL}/module/${id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: headers,
     body: JSON.stringify({
       title: title,
@@ -44,7 +44,7 @@ export const updateModule = (id, title, explanation, exercise, evaluation) => {
 
 export const completedModule = (id, completed) => {
   return fetch(`${API_URL}/module/${id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: headers,
     body: JSON.stringify({
       completed: completed
