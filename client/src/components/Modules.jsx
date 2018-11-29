@@ -9,10 +9,7 @@ const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
-  //TODO: save result to db
-  //Create a new prop for position in db and the use .sort()
 };
 
 class Modules extends Component {

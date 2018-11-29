@@ -36,11 +36,3 @@ export const updatePath = (id, title) => {
   }).then(response => response.json());
 };
 
-// export const addModuleToPath = (pathId, body)=> {
-//   return fetch(`${API_URL}/${pathId}/module`, {
-//     method: 'POST',
-//     headers: headers,
-//     body: JSON.stringify(body)
-//   }).then(response => response.json());
-// };
-
