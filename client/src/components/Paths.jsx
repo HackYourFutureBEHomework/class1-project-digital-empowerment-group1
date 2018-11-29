@@ -1,13 +1,24 @@
 import React, { Component } from "react";
-import { getPaths, createPath, deletePath } from "../api/paths";
-import { Link } from 'react-router-dom'
+import { getPaths, createPath, updatePath, deletePath } from "../api/paths";
+import Path from './Path';
+import AddPath from './AddPath';
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
 
 class Paths extends Component {
   constructor() {
     super();
     this.state = {
       title: "",
+      newTitle: "",
       paths: [],
+      isEdit: false,
+      activePathId: false,
       isLoading: true
     };
   }
@@ -18,9 +29,49 @@ class Paths extends Component {
     });
   }
 
+  onDragEnd = result => {
+    if (!result.destination) {
+      return;
+    }
+    const paths = reorder(
+      this.state.paths,
+      result.source.index,
+      result.destination.index
+    );
+    this.setState({
+      paths
+    });
+  };
+
+  handleTitleEdit = (id) => {
+    updatePath(id, this.state.newTitle).then(editedPaths => {
+      const paths = [...this.state.paths];
+      const index = paths.findIndex((t) => t._id === id)
+      paths[index].title = editedPaths.title
+      this.setState({
+        paths,
+        isEdit: false
+      });
+    });
+  };
+
   handleTitleChange = e => {
     this.setState({
       title: e.target.value
+    });
+  };
+
+
+  handleTitleEditChange = e => {
+    this.setState({
+      newTitle: e.target.value
+    });
+  };
+
+  handleEdit = (id) => {
+    this.setState({
+      activePathId: id,
+      isEdit: !this.state.isEdit
     });
   };
 
@@ -44,7 +95,14 @@ class Paths extends Component {
       });
     });
   };
-  
+
+  activePath = id => {
+    this.setState({
+      activePathId: id,
+      isOpen: true
+    });
+  };
+
   render() {
     const { paths } = this.state;
     if (this.state.isLoading) {
@@ -52,28 +110,26 @@ class Paths extends Component {
     } else {
       return (
         <div>
-          <h2>Learning Paths</h2>
-          <input
-            className="newTitle"
-            autoFocus
-            type="text"
-            placeholder="Add new Path"
-            onChange={this.handleTitleChange}
-            value={this.state.title}
+          <h2>Learning paths</h2>
+          <AddPath
+            state={this.state}
+            handleTitle={this.handleTitle}
+            addPath={this.addPath}
+            handleTitleChange={this.handleTitleChange}
           />
-          <button onClick={this.addPath}>Add Path</button>
           {paths.length > 0 ? (
-            <ul>
-              {paths.map(path => (
-                <li key={path._id}>
-                  <Link to={`/paths/${path._id}`}>{path.title}</Link>
-                  <button onClick={() => this.handleDelete(path._id)}>Delete</button>
-                </li>
-              ))}
-            </ul>
+            <Path
+              state={this.state}
+              handleEdit={this.handleEdit}
+              handleTitleEditChange={this.handleTitleEditChange}
+              activePath={this.activePath}
+              onDragEnd={this.onDragEnd}
+              handleDelete={this.handleDelete}
+              handleTitleEdit={this.handleTitleEdit}
+            />
           ) : (
-            <p>There are no paths yet</p>
-          )}
+              <p>There are no paths yet</p>
+            )}
         </div>
       );
     }

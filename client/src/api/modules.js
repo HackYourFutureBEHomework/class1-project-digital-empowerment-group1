@@ -10,7 +10,7 @@ export const getModules = () => {
   return fetch(`${API_URL}/module`).then(response => response.json());
 };
 
-export const createModule = (pathId, title, explanation, exercise, evaluation) => {
+export const createModule = (pathId, title,  explanation, exercise, evaluation) => {
   return fetch(`${API_URL}/path/${pathId}/module`, {
     method: 'POST',
     headers: headers,
@@ -31,7 +31,7 @@ export const deleteModule = (id) => {
 
 export const updateModule = (id, title, explanation, exercise, evaluation) => {
   return fetch(`${API_URL}/module/${id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: headers,
     body: JSON.stringify({
       title: title,
@@ -44,7 +44,7 @@ export const updateModule = (id, title, explanation, exercise, evaluation) => {
 
 export const completedModule = (id, completed) => {
   return fetch(`${API_URL}/module/${id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: headers,
     body: JSON.stringify({
       completed: completed

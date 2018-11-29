@@ -9,17 +9,14 @@ const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
-  //TODO: save result to db
-  //Create a new prop for position in db and the use .sort()
 };
 
 class Modules extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      path: null,
+      path:null,
       modules: [],
       isLoading: true,
       title: "",
@@ -36,8 +33,7 @@ class Modules extends Component {
 
   async componentDidMount() {
     const modules = await api.getModules();
-    this.setState({ modules });
-    console.log(this.props.match)
+    this.setState({ modules});
     const { pathId } = this.props.match.params;
     const path = await getPath(pathId);
       this.setState({
@@ -47,7 +43,6 @@ class Modules extends Component {
       isLoading: false
     });
   }
-
 
   onDragEnd = result => {
     if (!result.destination) {
@@ -72,7 +67,7 @@ class Modules extends Component {
   addModule = e => {
     e.preventDefault();
     this.setState({ isLoading: true });
-    const pathId = this.state.path._id
+    const pathId = this.state.path._id;
     const { title, explanation, exercise, evaluation } = this.state;
     api
       .createModule(pathId, title, explanation, exercise, evaluation)

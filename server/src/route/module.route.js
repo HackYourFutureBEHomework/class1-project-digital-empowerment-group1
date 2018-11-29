@@ -4,5 +4,5 @@ module.exports = (app) => {
   app.get('/module', modules.findAll);
   app.post('/module', modules.create);
   app.delete('/module/:id', modules.destroy);
-  app.put('/module/:id', modules.update);
+  app.patch('/module/:id', modules.update);
 };
