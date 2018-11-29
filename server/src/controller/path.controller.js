@@ -14,7 +14,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     Path.
     findById(req.params.pathId)
-    .populate('module')
+    .populate('modules')
       .then((path) => { res.send(path); })
       .catch((err) => {
         res.status(500).send({
@@ -54,8 +54,8 @@ exports.update = (req, res) => {
 };
 
 exports.addModuleToPath = async (pathId, moduleId) => {
-    const path = await Path.findById(pathId);
-    path.modules.push(moduleId);
-    await path.save();
-    return Path.findOneAndUpdate({ _id: pathId }, path, { new: true });
-  };
+  const path = await Path.findById(pathId);
+  path.modules.push(moduleId);
+  await path.save();
+  return Path.findOneAndUpdate({ _id: pathId }, path, { new: true });
+};

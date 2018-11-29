@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000/path';
+const API_URL = 'http://localhost:4000';
 
 const headers = {
   'Accept': 'application/json',
@@ -10,8 +10,8 @@ export const getModules = () => {
   return fetch(`${API_URL}/module`).then(response => response.json());
 };
 
-export const createModule = (title,  explanation, exercise, evaluation) => {
-  return fetch(`${API_URL}/module`, {
+export const createModule = (pathId, title, explanation, exercise, evaluation) => {
+  return fetch(`${API_URL}/path/${pathId}/module`, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify({

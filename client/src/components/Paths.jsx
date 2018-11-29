@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getPaths, createPath, deletePath } from "../api/paths";
+import { Link } from 'react-router-dom'
 
 class Paths extends Component {
   constructor() {
@@ -7,14 +8,13 @@ class Paths extends Component {
     this.state = {
       title: "",
       paths: [],
-      loading: false
+      isLoading: true
     };
   }
 
   componentDidMount() {
-    this.setState({ loading: true });
     getPaths().then(paths => {
-      this.setState({ paths: paths, loading: false });
+      this.setState({ paths: paths, isLoading: false });
     });
   }
 
@@ -26,19 +26,19 @@ class Paths extends Component {
 
   addPath = e => {
     e.preventDefault();
-    this.setState({ loading: true });
+    this.setState({ isLoading: true });
     createPath(this.state.title).then(newPath => {
       this.setState({
         paths: this.state.paths.concat(newPath),
         title: "",
-        loading: false
+        isLoading: false
       });
     });
   };
 
-  handleDelete = PathId => {
-    deletePath(PathId).then(myNewListOfPaths => {
-      myNewListOfPaths = this.state.paths.filter(m => m._id !== PathId);
+  handleDelete = pathId => {
+    deletePath(pathId).then(myNewListOfPaths => {
+      myNewListOfPaths = this.state.paths.filter(m => m._id !== pathId);
       this.setState({
         paths: myNewListOfPaths
       });
@@ -47,11 +47,12 @@ class Paths extends Component {
   
   render() {
     const { paths } = this.state;
-    if (this.state.loading) {
+    if (this.state.isLoading) {
       return <div className="loader" />;
     } else {
       return (
         <div>
+          <h2>Learning Paths</h2>
           <input
             className="newTitle"
             autoFocus
@@ -63,10 +64,9 @@ class Paths extends Component {
           <button onClick={this.addPath}>Add Path</button>
           {paths.length > 0 ? (
             <ul>
-              {console.log(this.state.paths)}
               {paths.map(path => (
                 <li key={path._id}>
-                  {path.title}
+                  <Link to={`/paths/${path._id}`}>{path.title}</Link>
                   <button onClick={() => this.handleDelete(path._id)}>Delete</button>
                 </li>
               ))}
