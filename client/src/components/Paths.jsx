@@ -61,7 +61,6 @@ class Paths extends Component {
     });
   };
 
-
   handleTitleEditChange = e => {
     this.setState({
       newTitle: e.target.value
