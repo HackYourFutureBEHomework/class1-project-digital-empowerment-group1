@@ -15,7 +15,7 @@ export default class EditModule extends Component {
             defaultValue={path.title}
           />
           </div>
-          <Button className="update" color="success" disabled={state.newTitle.length < 3} onClick={() => handleTitleEdit(path)}>
+          <Button className="update" color="success" disabled={state.newTitle.length < 3} onClick={() => handleTitleEdit(path._id)}>
             Update
           </Button>
           <Button className="cancel" color="secondary" onClick={handleEdit}>

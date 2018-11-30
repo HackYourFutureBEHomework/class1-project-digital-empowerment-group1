@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import { getPaths, createPath, updatePath, deletePath } from "../api/paths";
-import Path from './Path';
-import AddPath from './AddPath';
-
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-  return result;
-};
+import { getPaths, createPath, updatePath, deletePath } from "../../api/paths";
+import Path from "./Path";
+import AddPath from "./AddPath";
+import Search from "../../shared/Search";
 
 class Paths extends Component {
   constructor() {
@@ -19,7 +13,8 @@ class Paths extends Component {
       paths: [],
       isEdit: false,
       activePathId: false,
-      isLoading: true
+      isLoading: true,
+      SearchBar: ""
     };
   }
 
@@ -29,27 +24,14 @@ class Paths extends Component {
     });
   }
 
-  onDragEnd = result => {
-    if (!result.destination) {
-      return;
-    }
-    const paths = reorder(
-      this.state.paths,
-      result.source.index,
-      result.destination.index
-    );
-    this.setState({
-      paths
-    });
-  };
-
-  handleTitleEdit = (id) => {
+  handleTitleEdit = id => {
     updatePath(id, this.state.newTitle).then(editedPaths => {
       const paths = [...this.state.paths];
-      const index = paths.findIndex((t) => t._id === id)
-      paths[index].title = editedPaths.title
+      const index = paths.findIndex(t => t._id === id);
+      paths[index].title = editedPaths.title;
       this.setState({
         paths,
+        newTitle: '',
         isEdit: false
       });
     });
@@ -67,7 +49,7 @@ class Paths extends Component {
     });
   };
 
-  handleEdit = (id) => {
+  handleEdit = id => {
     this.setState({
       activePathId: id,
       isEdit: !this.state.isEdit
@@ -86,9 +68,9 @@ class Paths extends Component {
     });
   };
 
-  handleDelete = PathId => {
-    deletePath(PathId).then(myNewListOfPaths => {
-      myNewListOfPaths = this.state.paths.filter(m => m._id !== PathId);
+  handleDelete = pathId => {
+    deletePath(pathId).then(myNewListOfPaths => {
+      myNewListOfPaths = this.state.paths.filter(m => m._id !== pathId);
       this.setState({
         paths: myNewListOfPaths
       });
@@ -102,14 +84,22 @@ class Paths extends Component {
     });
   };
 
+  updateSearch = event => {
+    const SearchBar = event.target.value;
+    this.setState({ SearchBar });
+  };
+
   render() {
-    const { paths } = this.state;
+    const { paths, SearchBar } = this.state;
+    const filteredPaths = paths.filter(path => {
+      return path.title.toLowerCase().indexOf(SearchBar.toLowerCase()) !== -1;
+    });
     if (this.state.isLoading) {
       return <div className="loader" />;
     } else {
       return (
         <div>
-          <h2>Learning paths</h2>
+          <Search updateSearch={this.updateSearch}/>
           <AddPath
             state={this.state}
             handleTitle={this.handleTitle}
@@ -117,18 +107,25 @@ class Paths extends Component {
             handleTitleChange={this.handleTitleChange}
           />
           {paths.length > 0 ? (
-            <Path
-              state={this.state}
-              handleEdit={this.handleEdit}
-              handleTitleEditChange={this.handleTitleEditChange}
-              activePath={this.activePath}
-              onDragEnd={this.onDragEnd}
-              handleDelete={this.handleDelete}
-              handleTitleEdit={this.handleTitleEdit}
-            />
+            <ul className="path-cards">
+              {filteredPaths.map(path => (
+                <Path
+                  key={path._id}
+                  state={this.state}
+                  path={path}
+                  handleEdit={this.handleEdit}
+                  handleTitleEditChange={this.handleTitleEditChange}
+                  activePath={this.activePath}
+                  handleDelete={this.handleDelete}
+                  handleTitleEdit={this.handleTitleEdit}
+                  getListStyle={this.getListStyle}
+                  getItemStyle={this.getItemStyle}
+                />
+              ))}
+            </ul>
           ) : (
-              <p>There are no paths yet</p>
-            )}
+            <p>There are no paths yet</p>
+          )}
         </div>
       );
     }

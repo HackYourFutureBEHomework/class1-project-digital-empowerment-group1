@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import * as api from "../api/modules";
+import * as api from "../../api/modules";
+import { getPath } from '../../api/paths';
 import AddModule from "./AddModule";
 import Module from "./Module";
-import NavBar from '../shared/NavBar'
-import {getPath} from "../api/paths";
+import NavBar from '../../shared/NavBar'
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);

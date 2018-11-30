@@ -40,9 +40,12 @@ export default class AddPath extends Component {
     const { state, addPath, handleTitleChange} = this.props;
     return (
       <div>
-        <Button color="primary" className="add-module" onClick={this.openModal}>
-          Add Path
-        </Button>
+        <div className='add-path'>
+          <h2 className='learning-paths'>Learning paths</h2>
+          <Button color="primary" className="add-path-button" onClick={this.openModal}>
+            Add Path
+          </Button>
+        </div>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

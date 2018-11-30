@@ -54,8 +54,8 @@ exports.update = (req, res) => {
 };
 
 exports.addModuleToPath = async (pathId, moduleId) => {
-    const path = await Path.findById(pathId);
-    path.modules.push(moduleId);
-    await path.save();
-    return Path.findOneAndUpdate({ _id: pathId }, path, { new: true });
-  };
+  const path = await Path.findById(pathId);
+  path.modules.push(moduleId);
+  await path.save();
+  return Path.findOneAndUpdate({ _id: pathId }, path, { new: true });
+};
