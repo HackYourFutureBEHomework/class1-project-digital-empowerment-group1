@@ -29,7 +29,7 @@ export const deletePath = pathId => {
 };
 
 export const updatePath = (id, title) => {
-  return fetch(`${API_URL}/path/${id}`, {
+  return fetch(`${API_URL}/${id}`, {
     method: 'PATCH',
     headers: headers,
     body: JSON.stringify({title: title})
