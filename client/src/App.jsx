@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Paths from './components/Paths';
-import Modules from './components/Modules';
+import Paths from './components/paths/Paths';
+import Modules from './components/modules/Modules';
 
 const App = () => (
   <BrowserRouter>

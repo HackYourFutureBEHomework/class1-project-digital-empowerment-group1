@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { getPaths, createPath, updatePath, deletePath } from "../api/paths";
+import { getPaths, createPath, updatePath, deletePath } from "../../api/paths";
 import Path from "./Path";
 import AddPath from "./AddPath";
-import Search from "../shared/Search";
+import Search from "../../shared/Search";
 
 class Paths extends Component {
   constructor() {
