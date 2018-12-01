@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+
 html {
   box-sizing: border-box;
   font-size: 62.5%;
+  font-family: 'Roboto';
 }
 
 *,
@@ -25,25 +28,35 @@ p {
 }
 
 h1 {
+    font-family: 'Roboto';
+
   font-size: 3.2rem;
 }
 
 h2 {
+    font-family: 'Roboto';
+
   font-size: 2.4rem;
 }
 
 h3 {
+    font-family: 'Roboto';
+
   font-size: 1.9rem;
   font-weight: bold;
 }
 
 h4 {
+    font-family: 'Roboto';
+
   font-size: 1.6rem;
   font-weight: bold;
   padding: 15px;
 }
 
 h5 {
+    font-family: 'Roboto';
+
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 2.5;
@@ -56,6 +69,13 @@ h5 {
 .btn-primary {
   margin-top: 24px;
   font-size: 2.5rem;
+}
+
+.header-title {
+  transition: background-size .4s ease;
+  background: linear-gradient(to bottom, transparent 62%, #fff87e 0) center center/0% 75% no-repeat;
+  padding: 0 6px 2px 6px;
+  background-size: 94% 100%;
 }
 
 .explanation-btn,
@@ -76,7 +96,16 @@ h5 {
   margin: 22px 0 0 0;
   font-weight: bold;
   font-size: 3rem;
-}
+  transition: background-size .4s ease;
+  background: linear-gradient(to bottom, transparent 89%, #007bff 0) center center/0% 75% no-repeat;
+  padding: 0 17px 2px 13px;
+  }
+  .path-title:hover {
+    background-size: 94% 100%;
+  }
+  .path-title:active {
+    background-size: 80% 100%;
+  }
 
 .loader {
   border: 10px solid #f3f3f3;
@@ -301,15 +330,25 @@ strong {
 .add-path-button {
   margin-top: 24px;
   font-size: 22px;
-  padding: 0 35px 0 35px;
+  padding: 0 35px 4px 35px;
 }
 
 .learning-paths {
   margin: 27px 0 0 0;
   font-weight: bold;
   font-size: 3.5rem;
-  text-decoration: underline;
+  transition: background-size .4s ease;
+  background: linear-gradient(to bottom, transparent 89%, #007bff 0) center center/0% 75% no-repeat;
+  font-size: 3rem;
+  padding: 0 17px 2px 13px;
+  cursor: pointer;
 }
+  .learning-paths:hover {
+    background-size: 94% 100%;
+  }
+  .learning-paths:active {
+    background-size: 80% 100%;
+  }
 
 .card-img-overlay {
   background-color: #00000024;
@@ -328,7 +367,18 @@ strong {
   top: 40%;
   font-size: 24px;
   color: white;
+  transition: background-size .4s ease;
+  background: linear-gradient(to bottom, transparent 98%, #007bff 0) center center/0% 75% no-repeat;
+  padding: 0 17px 2px 13px;
+  cursor: pointer;
 }
+  .path-info:hover {
+    background-size: 94% 100%;
+  }
+  .path-info:active {
+    background-size: 80% 100%;
+  }
+
 
 .path-card-buttons {
   display: none;
