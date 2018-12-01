@@ -3,7 +3,9 @@ import * as api from "../../api/modules";
 import { getPath } from '../../api/paths';
 import AddModule from "./AddModule";
 import Module from "./Module";
-import NavBar from '../../shared/NavBar'
+import NavBar from '../../shared/NavBar';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -31,17 +33,23 @@ class Modules extends Component {
     };
   }
 
+  componentWillMount () {
+    nprogress.set(0.0);
+    nprogress.set(0.4);
+  }
+
   async componentDidMount() {
     const modules = await api.getModules();
     this.setState({ modules});
     const { pathId } = this.props.match.params;
     const path = await getPath(pathId);
-      this.setState({
+    this.setState({
       path,
       modules: path.modules,
       modulesAreLoading: false,
       isLoading: false
     });
+    nprogress.set(1.0);
   }
 
   onDragEnd = result => {

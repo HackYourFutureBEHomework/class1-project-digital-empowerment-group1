@@ -3,6 +3,8 @@ import { getPaths, createPath, updatePath, deletePath } from "../../api/paths";
 import Path from "./Path";
 import AddPath from "./AddPath";
 import Search from "../../shared/Search";
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 class Paths extends Component {
   constructor() {
@@ -18,10 +20,16 @@ class Paths extends Component {
     };
   }
 
+  componentWillMount () {
+    nprogress.set(0.0);
+    nprogress.set(0.4);
+  }
+  
   componentDidMount() {
     getPaths().then(paths => {
       this.setState({ paths: paths, isLoading: false });
     });
+    nprogress.set(1.0);
   }
 
   handleTitleEdit = id => {
