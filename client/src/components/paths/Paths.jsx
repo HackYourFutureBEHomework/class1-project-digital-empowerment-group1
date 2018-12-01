@@ -25,10 +25,9 @@ class Paths extends Component {
     nprogress.set(0.4);
   }
   
-  componentDidMount() {
-    getPaths().then(paths => {
+  async componentDidMount() {
+    const paths = await getPaths();
       this.setState({ paths: paths, isLoading: false });
-    });
     nprogress.set(1.0);
   }
 
