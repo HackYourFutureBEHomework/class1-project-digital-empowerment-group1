@@ -179,7 +179,6 @@ class Modules extends Component {
         completed: !this.state.completed,
         activeExplanation: true,
       });
-      console.log(modules)
     });
   };
   
