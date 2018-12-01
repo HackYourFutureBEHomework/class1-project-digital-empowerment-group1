@@ -23,7 +23,7 @@ class Modules extends Component {
       newTitle: "",
       isEdit: false,
       isOpen: false,
-      completed: true,
+      completed: false,
       activeExplanation: true,
       activeExercise: false,
       activeEvaluation: false,
@@ -155,7 +155,7 @@ class Modules extends Component {
   };
 
   evaluationStep = id => {
-    api.completedModule(id, this.state.completed).then(doneModules => {
+    api.completedModule(id, true).then(doneModules => {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === id);
       modules[index].completed = doneModules.completed;
@@ -168,14 +168,15 @@ class Modules extends Component {
         activeEvaluation: false,
         activeModuleId: newModuleId,
         isOpen: true,
-        completed: true,
+        completed: !this.state.completed,
         activeExplanation: true,
       });
+      console.log(modules)
     });
   };
   
   resetSteps = id => {
-    api.completedModule(id, this.state.completed).then(notDoneModules => {
+    api.completedModule(id, false).then(notDoneModules => {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === id);
       modules[index].completed = notDoneModules.completed;

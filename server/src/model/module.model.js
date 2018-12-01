@@ -9,10 +9,10 @@ const ModuleSchema = mongoose.Schema(
     explanation: String,
     exercise: String,
     evaluation: String,
-    // completed: { // TODO: disable completed
-    //   type: Boolean,
-    //   default: false
-    // }
+    completed: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true
