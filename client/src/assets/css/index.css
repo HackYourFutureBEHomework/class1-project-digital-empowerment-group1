@@ -301,7 +301,8 @@ h5 {
 .learning-paths {
   margin: 27px 0 0 0;
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 3.5rem;
+  text-decoration: underline;
 }
 
 .card-img-overlay {
@@ -365,11 +366,12 @@ h5 {
   background: url(../images/search.svg) right no-repeat;
   background-size: 25px;
   background-color: white;
-  width: 30%;
+  width: 50%;
   height: 37px;
   padding: 10px;
   border-radius: 0.5rem;
   outline: none;
+  margin: 0 auto;
 }
 
 .nav-tabs {
