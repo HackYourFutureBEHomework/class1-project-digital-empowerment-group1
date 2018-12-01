@@ -40,7 +40,7 @@ h3 {
 h4 {
   font-size: 1.6rem;
   font-weight: bold;
-  padding-left: 10px;
+  padding: 15px;
 }
 
 h5 {
@@ -51,15 +51,19 @@ h5 {
 
 #root {
   text-align: center;
-  /* display: flex;
-  flex-wrap: wrap;
-  align-content: space-between; */
-  /* flex-direction: row; */
 }
 
 .btn-primary {
   margin-top: 24px;
   font-size: 2.5rem;
+}
+
+.explanation-btn,
+.exercise-btn,
+.evaluation-btn {
+  left: 80%;
+  position: relative;
+  width: 14%;
 }
 
 .path-header {
@@ -214,6 +218,7 @@ h5 {
 .add-module {
   font-size: 22px;
 }
+
 .content-btn {
   display: flex;
   justify-content: center;
@@ -222,6 +227,10 @@ h5 {
 .new-module {
   display: flex;
   flex-direction: column;
+}
+
+.new-path {
+  padding: inherit;
 }
 
 .edit-modal {
@@ -268,10 +277,13 @@ h5 {
   display: flex;
   justify-content: center;
   margin: 40px 30px 10px 30px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 30px;
 }
 
-@media only screen and (max-width: 768px) {
-  .path-cards {
+@media only screen and (max-width: 506px) {
+  .add-path {
     flex-direction: column;
   }
 }
@@ -283,16 +295,20 @@ h5 {
   margin: 0 auto;
 }
 
+strong {
+  font-size: 25px;
+}
 .add-path-button {
   margin-top: 24px;
   font-size: 22px;
-  width: 20%;
+  padding: 0 35px 0 35px;
 }
 
 .learning-paths {
   margin: 27px 0 0 0;
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 3.5rem;
+  text-decoration: underline;
 }
 
 .card-img-overlay {
@@ -301,6 +317,10 @@ h5 {
 
 .card:hover .card-img-overlay {
   background-color: #63636380;
+}
+
+.row {
+  padding-bottom: 30px;
 }
 
 .path-info {
@@ -356,9 +376,21 @@ h5 {
   background: url(../images/search.svg) right no-repeat;
   background-size: 25px;
   background-color: white;
-  width: 30%;
+  width: 50%;
   height: 37px;
   padding: 10px;
   border-radius: 0.5rem;
   outline: none;
+  margin: 0 auto;
+}
+
+.nav-tabs {
+  border-bottom: none;
+  justify-content: center;
+  margin-top: 20px
+}
+
+.nav-tabs .nav-link.active {
+  color: #fff;
+  background-color: #28a745;
 }

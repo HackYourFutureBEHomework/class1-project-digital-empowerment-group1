@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import 'normalize.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/index.css';
+import './components/404/NotFound.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

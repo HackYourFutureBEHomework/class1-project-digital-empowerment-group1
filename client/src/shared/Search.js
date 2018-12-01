@@ -1,22 +1,17 @@
 import React, { Component } from "react";
-import { Navbar, NavbarBrand, Button } from "reactstrap";
+import { Navbar } from "reactstrap";
 
 export default class Search extends Component {
   render() {
+    const { updateSearch } = this.props;
     return (
       <div>
         <Navbar color="faded" light>
-          <NavbarBrand
-            href="http://www.hobosite.be/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mr-auto">
-            <Button>HOBO VZW</Button>
-          </NavbarBrand>
+          <h2>Digital Empowerment</h2>
           <input
             className="searchBar"
             type="text"
-            onChange={this.updateSearch}
+            onChange={updateSearch}
             placeholder="Find a Path..."
           />
         </Navbar>

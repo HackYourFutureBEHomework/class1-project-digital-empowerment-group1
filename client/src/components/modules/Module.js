@@ -11,9 +11,8 @@ export default class Module extends Component {
       handleTitleEditChange,
       activeModule, onDragEnd,
       handleDelete, evaluationStep,
-      handleContentEdit, explanationChange,
-      exerciseChange, evaluationChange,
-      explanationStep, exerciseStep
+      explanationStep, exerciseStep,
+      handleContentEdit,
     } = this.props;
     return (
       <DragDropContext onDragEnd={onDragEnd}>
@@ -68,15 +67,12 @@ export default class Module extends Component {
                       <div className={state.isEdit ? "show-edit" : "hide-list"}>
                         <div style={{ display: state.activeModuleId === module._id ? "block" : "none" }}>
                           <EditModule
-                            state={state}
+                            newTitle={state.newTitle}
                             module={module}
                             handleChange={handleChange}
                             handleTitleEditChange={handleTitleEditChange}
                             handleContentEdit={handleContentEdit}
                             handleEdit={handleEdit} 
-                            explanationChange={explanationChange}
-                            exerciseChange={exerciseChange}
-                            evaluationChange={evaluationChange}
                           />
                         </div>
                       </div>

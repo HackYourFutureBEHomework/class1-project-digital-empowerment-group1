@@ -3,7 +3,9 @@ import * as api from "../../api/modules";
 import { getPath } from '../../api/paths';
 import AddModule from "./AddModule";
 import Module from "./Module";
-import NavBar from '../../shared/NavBar'
+import NavBar from '../../shared/NavBar';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -23,7 +25,7 @@ class Modules extends Component {
       newTitle: "",
       isEdit: false,
       isOpen: false,
-      completed: true,
+      completed: false,
       activeExplanation: true,
       activeExercise: false,
       activeEvaluation: false,
@@ -31,17 +33,23 @@ class Modules extends Component {
     };
   }
 
+  componentWillMount () {
+    nprogress.set(0.0);
+    nprogress.set(0.4);
+  }
+
   async componentDidMount() {
     const modules = await api.getModules();
     this.setState({ modules});
     const { pathId } = this.props.match.params;
     const path = await getPath(pathId);
-      this.setState({
+    this.setState({
       path,
       modules: path.modules,
       modulesAreLoading: false,
       isLoading: false
     });
+    nprogress.set(1.0);
   }
 
   onDragEnd = result => {
@@ -81,7 +89,6 @@ class Modules extends Component {
           isLoading: false
         });
         this.activeModule(newModule._id)
-        this.explanationChange()
       });
   };
 
@@ -137,7 +144,6 @@ class Modules extends Component {
           modules,
           isEdit: false
         });
-        this.explanationChange()  
       });
   };
 
@@ -157,7 +163,7 @@ class Modules extends Component {
   };
 
   evaluationStep = id => {
-    api.completedModule(id, this.state.completed).then(doneModules => {
+    api.completedModule(id, true).then(doneModules => {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === id);
       modules[index].completed = doneModules.completed;
@@ -170,14 +176,15 @@ class Modules extends Component {
         activeEvaluation: false,
         activeModuleId: newModuleId,
         isOpen: true,
-        completed: true,
+        completed: !this.state.completed,
         activeExplanation: true,
       });
+      console.log(modules)
     });
   };
   
   resetSteps = id => {
-    api.completedModule(id, this.state.completed).then(notDoneModules => {
+    api.completedModule(id, false).then(notDoneModules => {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === id);
       modules[index].completed = notDoneModules.completed;
@@ -185,30 +192,6 @@ class Modules extends Component {
         completed: !this.state.completed,
         activeExplanation: true,
       });
-    });
-  };
-
-  explanationChange = () => {
-    this.setState({
-      activeExplanation: true,
-      activeExercise: false,
-      activeEvaluation: false
-    });
-  };
-
-  exerciseChange = () => {
-    this.setState({
-      activeExplanation: false,
-      activeExercise: true,
-      activeEvaluation: false
-    });
-  };
-
-  evaluationChange = () => {
-    this.setState({
-      activeExplanation: false,
-      activeExercise: false,
-      activeEvaluation: true
     });
   };
 
@@ -225,9 +208,6 @@ class Modules extends Component {
             state={this.state}
             handleTitle={this.handleTitle}
             addModule={this.addModule}
-            explanationChange={this.explanationChange}
-            exerciseChange={this.exerciseChange}
-            evaluationChange={this.evaluationChange}
             handleChange={this.handleChange}
           />
         </div>
@@ -245,9 +225,6 @@ class Modules extends Component {
             handleChange={this.handleChange}
             handleTitleEditChange={this.handleTitleEditChange}
             activeModule={this.activeModule}
-            explanationChange={this.explanationChange}
-            exerciseChange={this.exerciseChange}
-            evaluationChange={this.evaluationChange}
           />
         ) : (
           <p>There are no modules yet</p>

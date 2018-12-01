@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
-import { Button } from 'reactstrap';
+import { Button } from "reactstrap";
 
 const customStyles = {
   content: {
@@ -20,7 +20,7 @@ export default class AddPath extends Component {
     super();
 
     this.state = {
-      modalIsOpen: false,
+      modalIsOpen: false
     };
   }
 
@@ -37,13 +37,16 @@ export default class AddPath extends Component {
   };
 
   render() {
-    const { state, addPath, handleTitleChange} = this.props;
+    const { state, addPath, handleTitleChange } = this.props;
     return (
       <div>
-        <div className='add-path'>
-          <h2 className='learning-paths'>Learning paths</h2>
-          <Button color="primary" className="add-path-button" onClick={this.openModal}>
-            Add Path
+        <div className="add-path">
+          <h2 className="learning-paths">Learning paths</h2>
+          <Button
+            color="primary"
+            className="add-path-button"
+            onClick={this.openModal}>
+            <strong>+</strong> New Path
           </Button>
         </div>
         <Modal
@@ -52,18 +55,26 @@ export default class AddPath extends Component {
           onRequestClose={this.closeModal}
           style={customStyles}
           contentLabel="Modal">
-          <h2 ref={subtitle => (this.subtitle = subtitle)}>Add a new path</h2>
-          <div className='new-module'>
+          <h2 ref={subtitle => (this.subtitle = subtitle)}>
+            Add new learning path
+          </h2>
+          <hr />
+          <div className="new-path">
             <input
-              className="newTitle"
+              className="title"
               autoFocus
               type="text"
-              placeholder="Add new Path"
+              placeholder="Path Title"
               onChange={handleTitleChange}
               value={state.title}
             />
+            <Button
+              color="success"
+              onClick={addPath}
+              disabled={state.title.length < 3}>
+              Add Path
+            </Button>
           </div>
-          <Button color="success" onClick={addPath} disabled={state.title.length < 3}>Add Path</Button>
         </Modal>
       </div>
     );

@@ -14,7 +14,7 @@ export default class ModuleSteps extends Component {
                 state.activeExplanation ? "show-list" : "hide-list"
               }>
               <div dangerouslySetInnerHTML={{ __html: module.explanation }} />
-              <Button outline color="secondary" onClick={explanationStep}>Next</Button>
+              <Button outline color="secondary" className='explanation-btn' onClick={explanationStep}>Next</Button>
             </div>
           </li>
           <li>
@@ -22,7 +22,7 @@ export default class ModuleSteps extends Component {
             <div
               className={state.activeExercise ? "show-list" : "hide-list"}>
               <div dangerouslySetInnerHTML={{ __html: module.exercise }} />
-              <Button outline color="secondary" onClick={exerciseStep}>Next</Button>
+              <Button outline color="secondary" className='exercise-btn' onClick={exerciseStep}>Next</Button>
             </div>
           </li>
           <li>
@@ -32,7 +32,7 @@ export default class ModuleSteps extends Component {
                 state.activeEvaluation ? "show-list" : "hide-list"
               }>
               <div dangerouslySetInnerHTML={{ __html: module.evaluation }} />
-              <Button outline color="success" onClick={evaluationStep}>Finish</Button>
+              <Button outline color="success" className='evaluation-btn' onClick={evaluationStep}>Finish</Button>
             </div>
           </li>
         </ul>

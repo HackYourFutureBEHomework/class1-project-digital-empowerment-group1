@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Component } from "react";
 import { Navbar, NavbarBrand, Button } from "reactstrap";
 
-export default class Example extends React.Component {
+export default class NavBar extends Component {
   render() {
     return (
       <div>
         <Navbar color="faded" light>
-          <NavbarBrand href="/" className="mr-auto">
-            <Button>Return to Paths</Button>
+          <NavbarBrand href="/paths" className="mr-auto">
+            <Button>Back to Paths</Button>
           </NavbarBrand>
         </Navbar>
       </div>
