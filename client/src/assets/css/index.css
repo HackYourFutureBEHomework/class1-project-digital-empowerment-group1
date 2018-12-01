@@ -40,7 +40,7 @@ h3 {
 h4 {
   font-size: 1.6rem;
   font-weight: bold;
-  padding-left: 10px;
+  padding: 15px;
 }
 
 h5 {
@@ -51,15 +51,19 @@ h5 {
 
 #root {
   text-align: center;
-  /* display: flex;
-  flex-wrap: wrap;
-  align-content: space-between; */
-  /* flex-direction: row; */
 }
 
 .btn-primary {
   margin-top: 24px;
   font-size: 2.5rem;
+}
+
+.explanation-btn,
+.exercise-btn,
+.evaluation-btn {
+  left: 80%;
+  position: relative;
+  width: 14%;
 }
 
 .path-header {
@@ -214,6 +218,7 @@ h5 {
 .add-module {
   font-size: 22px;
 }
+
 .content-btn {
   display: flex;
   justify-content: center;
@@ -222,6 +227,10 @@ h5 {
 .new-module {
   display: flex;
   flex-direction: column;
+}
+
+.new-path {
+  padding: inherit;
 }
 
 .edit-modal {
@@ -361,4 +370,15 @@ h5 {
   padding: 10px;
   border-radius: 0.5rem;
   outline: none;
+}
+
+.nav-tabs {
+  border-bottom: none;
+  justify-content: center;
+  margin-top: 20px
+}
+
+.nav-tabs .nav-link.active {
+  color: #fff;
+  background-color: #28a745;
 }

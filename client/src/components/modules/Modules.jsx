@@ -81,7 +81,6 @@ class Modules extends Component {
           isLoading: false
         });
         this.activeModule(newModule._id)
-        this.explanationChange()
       });
   };
 
@@ -137,7 +136,6 @@ class Modules extends Component {
           modules,
           isEdit: false
         });
-        this.explanationChange()  
       });
   };
 
@@ -188,30 +186,6 @@ class Modules extends Component {
     });
   };
 
-  explanationChange = () => {
-    this.setState({
-      activeExplanation: true,
-      activeExercise: false,
-      activeEvaluation: false
-    });
-  };
-
-  exerciseChange = () => {
-    this.setState({
-      activeExplanation: false,
-      activeExercise: true,
-      activeEvaluation: false
-    });
-  };
-
-  evaluationChange = () => {
-    this.setState({
-      activeExplanation: false,
-      activeExercise: false,
-      activeEvaluation: true
-    });
-  };
-
   render() {
     const { modules, path } = this.state;
     if (this.state.isLoading) return <div className="loader" />;
@@ -225,9 +199,6 @@ class Modules extends Component {
             state={this.state}
             handleTitle={this.handleTitle}
             addModule={this.addModule}
-            explanationChange={this.explanationChange}
-            exerciseChange={this.exerciseChange}
-            evaluationChange={this.evaluationChange}
             handleChange={this.handleChange}
           />
         </div>
@@ -245,9 +216,6 @@ class Modules extends Component {
             handleChange={this.handleChange}
             handleTitleEditChange={this.handleTitleEditChange}
             activeModule={this.activeModule}
-            explanationChange={this.explanationChange}
-            exerciseChange={this.exerciseChange}
-            evaluationChange={this.evaluationChange}
           />
         ) : (
           <p>There are no modules yet</p>
