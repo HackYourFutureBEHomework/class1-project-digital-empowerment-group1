@@ -16,7 +16,7 @@ export default class PathCard extends Component {
     return (
       <Container>
         <Row>
-          <Col xs="12" sm="12" md="12" xl="12">
+          <Col xs="12" sm="12" md="12" lg='12' xl="12">
             <Card>
               <Link to={`/paths/${path._id}`}>
                 <CardImg

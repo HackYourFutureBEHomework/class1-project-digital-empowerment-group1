@@ -277,10 +277,13 @@ h5 {
   display: flex;
   justify-content: center;
   margin: 40px 30px 10px 30px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 30px;
 }
 
-@media only screen and (max-width: 768px) {
-  .path-cards {
+@media only screen and (max-width: 506px) {
+  .add-path {
     flex-direction: column;
   }
 }
@@ -292,10 +295,13 @@ h5 {
   margin: 0 auto;
 }
 
+strong {
+  font-size: 25px;
+}
 .add-path-button {
   margin-top: 24px;
   font-size: 22px;
-  width: 20%;
+  padding: 0 35px 0 35px;
 }
 
 .learning-paths {
@@ -311,6 +317,10 @@ h5 {
 
 .card:hover .card-img-overlay {
   background-color: #63636380;
+}
+
+.row {
+  padding-bottom: 30px;
 }
 
 .path-info {

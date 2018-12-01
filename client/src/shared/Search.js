@@ -7,6 +7,7 @@ export default class Search extends Component {
     return (
       <div>
         <Navbar color="faded" light>
+          <h2>Digital Empowerment</h2>
           <input
             className="searchBar"
             type="text"
