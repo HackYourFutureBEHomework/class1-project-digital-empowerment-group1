@@ -72,9 +72,9 @@ h5 {
 }
 
 .header-title {
-  color: grey;
-  transition: background-size .4s ease;
-  background: linear-gradient(to bottom, transparent 55%, #fff87e 0) center center/0% 75% no-repeat;
+  color: #616161;
+  background: linear-gradient(to bottom, transparent 74%, #fff 0);
+  /* background: linear-gradient(to bottom, transparent 55%, #fff87e 0) center center/0% 75% no-repeat; */
   padding: 0 15px 2px 13px;
   background-size: 94% 100%;
 }
@@ -93,21 +93,21 @@ h5 {
   padding-bottom: 30px;
 }
 
-.path-title {
-  margin: 22px 0 0 0;
+.learning-paths, .path-title {
+  margin: 27px 0 0 0;
   color: grey;
   font-weight: bold;
   font-size: 3rem;
   transition: background-size .4s ease;
-  background: linear-gradient(to bottom, transparent 89%, #007bff 0) center center/0% 75% no-repeat;
+  background: linear-gradient(to bottom, transparent 86%, #007bff 0) center center/0% 75% no-repeat;
   padding: 0 17px 2px 13px;
 }
 
-.path-title:hover {
+.learning-paths:hover, .path-title:hover {
   background-size: 94% 100%;
 }
 
-.path-title:active {
+.learning-paths:active, .path-title:active {
   background-size: 80% 100%;
 }
 
@@ -162,7 +162,7 @@ h5 {
 }
 
 .edit-input {
-  height: 28px;
+  height: 37px;
   margin: 0 auto 5px;
   border-radius: 0.5rem;
   background: #f7f7f7;
@@ -338,22 +338,6 @@ strong {
   padding: 0 35px 4px 35px;
 }
 
-.learning-paths {
-  margin: 27px 0 0 0;
-  font-weight: 100;
-  transition: background-size .4s ease;
-  background: linear-gradient(to bottom, transparent 89%, #007bff 0) center center/0% 75% no-repeat;
-  font-size: 3rem;
-  padding: 0 17px 2px 13px;
-}
-
-.learning-paths:hover {
-  background-size: 94% 100%;
-}
-
-.learning-paths:active {
-  background-size: 80% 100%;
-}
 
 .card-img-overlay {
   background-color: #00000024;
@@ -428,14 +412,16 @@ strong {
 }
 
 .searchBar {
-  background: url(../images/search.svg) right no-repeat;
+  background: url(../images/search.svg) 98% no-repeat;
   background-size: 25px;
   background-color: white;
   width: 40%;
   height: 37px;
   padding: 10px;
-  border-radius: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #dfe1e5;
   outline: none;
+  box-shadow: none;
   margin: 0 auto;
 }
 

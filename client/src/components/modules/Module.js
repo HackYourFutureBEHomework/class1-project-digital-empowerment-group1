@@ -33,12 +33,14 @@ export default class Module extends Component {
                       <div className={state.isEdit ? "hide-list" : "show-list"} onClick={() => activeModule(module._id)}>
                         <div className="content">
                           <h3>{module.title}</h3>
-                          <input
-                            className="checkbox"
-                            type="checkbox"
-                            onChange={() => resetSteps(module._id)}
-                            checked={module.completed ? "checked" : ""}
-                          />
+                          {module.completed &&
+                            <input
+                              className="checkbox"
+                              type="checkbox"
+                              onChange={() => resetSteps(module._id)}
+                              checked={module.completed ? "checked" : ""}
+                            />
+                          }
                           <button
                             className="delete"
                             onClick={() => { if (window.confirm(`Delete (${module.title})?`)) handleDelete(module._id);}}>
