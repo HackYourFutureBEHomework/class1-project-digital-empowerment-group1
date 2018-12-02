@@ -95,7 +95,7 @@ h5 {
 
 .learning-paths, .path-title {
   margin: 27px 0 0 0;
-  color: grey;
+  color: #5d5d5d;
   font-weight: bold;
   font-size: 3rem;
   transition: background-size .4s ease;
