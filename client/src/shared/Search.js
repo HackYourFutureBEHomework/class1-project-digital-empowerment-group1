@@ -8,12 +8,10 @@ export default class Search extends Component {
       <div>
         <Navbar color="faded" light>
           <h2 className='header-title'>Digital Empowerment</h2>
-          <input
-            className="searchBar"
-            type="text"
-            onChange={updateSearch}
-            placeholder="Find a Path..."
-          />
+          <div className="search-container">
+            <input className='new-search' type="text" onChange={updateSearch} placeholder="Find a Path..."/>
+            <div className="search"></div>
+          </div>
         </Navbar>
       </div>
     );
