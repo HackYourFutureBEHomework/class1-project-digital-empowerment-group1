@@ -3,7 +3,7 @@ import * as api from "../../api/modules";
 import { getPath } from '../../api/paths';
 import AddModule from "./AddModule";
 import Module from "./Module";
-import NavBar from '../../shared/NavBar';
+import ModuleBar from '../../shared/ModuleBar';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
 
@@ -199,7 +199,7 @@ class Modules extends Component {
     if (this.state.isLoading) return <div className="loader" />;
     return (
       <div>
-        <NavBar />
+        <ModuleBar />
         <div className='content-container'>
         <div className={this.state.edit ? "hide-list" : "path-header"}>
           <h2 className="path-title">{path.title}</h2>

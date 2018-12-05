@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, NavbarBrand, Button } from "reactstrap";
 
-export default class NavBar extends Component {
+export default class ModuleBar extends Component {
   render() {
     return (
       <div>

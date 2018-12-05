@@ -46,7 +46,7 @@ export default class AddPath extends Component {
             color="primary"
             className="add-path-button"
             onClick={this.openModal}>
-            <strong>+</strong> New Path
+            New Path
           </Button>
         </div>
         <Modal

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { getPaths, createPath, updatePath, deletePath } from "../../api/paths";
 import Path from "./Path";
 import AddPath from "./AddPath";
-import Search from "../../shared/Search";
+import Header from "../../shared/Header";
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
 
@@ -98,6 +98,8 @@ class Paths extends Component {
 
   render() {
     const { paths, SearchBar } = this.state;
+    console.log(this.props)
+    const { isLoggedIn } = this.props;
     const filteredPaths = paths.filter(path => {
       return path.title.toLowerCase().indexOf(SearchBar.toLowerCase()) !== -1;
     });
@@ -106,7 +108,7 @@ class Paths extends Component {
     } else {
       return (
         <div>
-          <Search updateSearch={this.updateSearch}/>
+          <Header updateSearch={this.updateSearch} isLoggedIn={isLoggedIn}/>
           <AddPath
             state={this.state}
             handleTitle={this.handleTitle}
