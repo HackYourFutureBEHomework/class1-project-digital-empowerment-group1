@@ -37,17 +37,19 @@ export default class AddPath extends Component {
   };
 
   render() {
-    const { state, addPath, handleTitleChange } = this.props;
+    const { state, addPath, handleTitleChange, isLoggedIn} = this.props;
     return (
       <div>
         <div className="add-path">
           <h2 className="learning-paths">Learning paths</h2>
-          <Button
-            color="primary"
-            className="add-path-button"
-            onClick={this.openModal}>
-            New Path
-          </Button>
+          {isLoggedIn && (
+            <Button
+              color="primary"
+              className="add-path-button"
+              onClick={this.openModal}>
+              New Path
+            </Button>
+          )}
         </div>
         <Modal
           isOpen={this.state.modalIsOpen}

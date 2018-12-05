@@ -31,7 +31,7 @@ export default class App extends Component {
           <Route path='/login' render={() => <Login setLoggedInState={this.setLoggedInState} />}/>
           <Route path='/signup' render={() => <SignUp isLoggedIn={isLoggedIn} />} />
           <Route exact path="/:path(|paths|path|index)" render={props => <Paths {...props} isLoggedIn={isLoggedIn} />} />
-          <Route path="/paths/:pathId" render={() => <Modules isLoggedIn={isLoggedIn} />} />
+          <Route path="/paths/:pathId" render={props => <Modules {...props} isLoggedIn={isLoggedIn} />} />
           <Route component={NotFound} />
           {/* <Route path='/signup' render={() => (
             isLoggedIn === true ? (

@@ -11,7 +11,8 @@ export default class Path extends Component {
       handleTitleEditChange,
       activePath,
       handleDelete,
-      handleTitleEdit
+      handleTitleEdit,
+      isLoggedIn
     } = this.props;
     return (
       <li
@@ -24,6 +25,7 @@ export default class Path extends Component {
             path={path}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
+            isLoggedIn={isLoggedIn}
           />
         </div>
         <div className={state.isEdit ? "show-edit" : "hide-list"}>

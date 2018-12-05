@@ -98,7 +98,6 @@ class Paths extends Component {
 
   render() {
     const { paths, SearchBar } = this.state;
-    console.log(this.props)
     const { isLoggedIn } = this.props;
     const filteredPaths = paths.filter(path => {
       return path.title.toLowerCase().indexOf(SearchBar.toLowerCase()) !== -1;
@@ -108,12 +107,13 @@ class Paths extends Component {
     } else {
       return (
         <div>
-          <Header updateSearch={this.updateSearch} isLoggedIn={isLoggedIn}/>
+          <Header updateSearch={this.updateSearch} isLoggedIn={isLoggedIn} />
           <AddPath
             state={this.state}
             handleTitle={this.handleTitle}
             addPath={this.addPath}
             handleTitleChange={this.handleTitleChange}
+            isLoggedIn={isLoggedIn}
           />
           {paths.length > 0 ? (
             <ul className="path-cards">
@@ -129,6 +129,7 @@ class Paths extends Component {
                   handleTitleEdit={this.handleTitleEdit}
                   getListStyle={this.getListStyle}
                   getItemStyle={this.getItemStyle}
+                  isLoggedIn={isLoggedIn}
                 />
               ))}
             </ul>

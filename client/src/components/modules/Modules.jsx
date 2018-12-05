@@ -196,6 +196,7 @@ class Modules extends Component {
 
   render() {
     const { modules, path } = this.state;
+    const { isLoggedIn } = this.props;
     if (this.state.isLoading) return <div className="loader" />;
     return (
       <div>
@@ -203,12 +204,14 @@ class Modules extends Component {
         <div className='content-container'>
         <div className={this.state.edit ? "hide-list" : "path-header"}>
           <h2 className="path-title">{path.title}</h2>
-          <AddModule
-            state={this.state}
-            handleTitle={this.handleTitle}
-            addModule={this.addModule}
-            handleChange={this.handleChange}
-          />
+          {isLoggedIn && (
+            <AddModule
+              state={this.state}
+              handleTitle={this.handleTitle}
+              addModule={this.addModule}
+              handleChange={this.handleChange}
+            />  
+          )}
         </div>
         {modules.length > 0 ? (
           <Module
@@ -224,6 +227,7 @@ class Modules extends Component {
             handleChange={this.handleChange}
             handleTitleEditChange={this.handleTitleEditChange}
             activeModule={this.activeModule}
+            isLoggedIn={isLoggedIn}
           />
         ) : (
           <p>There are no modules yet</p>

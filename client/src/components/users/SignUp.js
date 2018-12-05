@@ -31,7 +31,6 @@ export default class SignUp extends Component {
 
   render() {
     const { email, password } = this.state;
-    console.log(this.props)
     if (this.state.loading) {
       return <div className="loader" />;
     } else {

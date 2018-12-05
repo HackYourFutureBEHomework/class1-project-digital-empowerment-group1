@@ -12,11 +12,11 @@ import { Link } from "react-router-dom";
 
 export default class PathCard extends Component {
   render() {
-    const { handleEdit, handleDelete, path } = this.props;
+    const { handleEdit, handleDelete, path, isLoggedIn } = this.props;
     return (
       <Container>
         <Row>
-          <Col xs="12" sm="12" md="12" lg='12' xl="12">
+          <Col xs="12" sm="12" md="12" lg="12" xl="12">
             <Card>
               <Link to={`/paths/${path._id}`}>
                 <CardImg
@@ -26,10 +26,11 @@ export default class PathCard extends Component {
                   alt="Card image cap"
                 />
                 <CardImgOverlay>
-                  <h3 className='path-info'>{path.title}</h3>
+                  <h3 className="path-info">{path.title}</h3>
                 </CardImgOverlay>
               </Link>
-                  <div className='path-card-buttons'>
+              {isLoggedIn && (
+                <div className="path-card-buttons">
                   <Button
                     className="delete-path"
                     onClick={() => {
@@ -38,10 +39,13 @@ export default class PathCard extends Component {
                     }}>
                     Delete
                   </Button>
-                  <Button className="edit-path" onClick={() => handleEdit(path._id)}>
+                  <Button
+                    className="edit-path"
+                    onClick={() => handleEdit(path._id)}>
                     Edit
                   </Button>
-                  </div>
+                </div>
+              )}
             </Card>
           </Col>
         </Row>

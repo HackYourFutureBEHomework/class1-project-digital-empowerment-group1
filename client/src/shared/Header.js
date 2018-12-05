@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Navbar } from "reactstrap";
 import Login from "../components/users/Login";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 
 export default class Header extends Component {
