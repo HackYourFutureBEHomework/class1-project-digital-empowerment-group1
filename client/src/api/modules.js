@@ -47,9 +47,9 @@ export const updateModule = (id, title, explanation, exercise, evaluation) => {
   }).then(response => response.json());
 };
 
-export const completedModule = (id, completed) => {
+export const resetModule = (id, completed) => {
   return fetch(`${API_URL}/module/${id}`, {
-    method: 'PATCH',
+    method: 'PUT',
     headers: headers,
     body: JSON.stringify({
       completed: completed

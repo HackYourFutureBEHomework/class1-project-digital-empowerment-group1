@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { userSignUp } from "../../api/users";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-// import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class SignUp extends Component {
   state = {
@@ -36,36 +36,32 @@ export default class SignUp extends Component {
     } else {
       return (
         <div>
-            <div>
-              <Form inline>
-                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                  <Label>
-                    Email:
-                    <Input
-                      type="email"
-                      value={email}
-                      name="email"
-                      onChange={this.setField}
-                    />
-                  </Label>
-                </FormGroup>
-                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                  <Label>
-                    Password:
-                    <Input
-                      type="password"
-                      value={password}
-                      name="password"
-                      onChange={this.setField}
-                    />
-                  </Label>
-              </FormGroup>
-              {/* <div> */}
-                <Button onClick={this.signUp}>Sign Up</Button>
-                {/* <Redirect to="/paths"/>
-              </div> */}
-            </Form>
-            </div>
+          <Form inline>
+            <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+              <Label>
+                Email:
+                <Input
+                  type="email"
+                  value={email}
+                  name="email"
+                  onChange={this.setField}
+                />
+              </Label>
+            </FormGroup>
+            <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+              <Label>
+                Password:
+                <Input
+                  type="password"
+                  value={password}
+                  name="password"
+                  onChange={this.setField}
+                />
+              </Label>
+            </FormGroup>
+            <Button onClick={this.signUp}>Sign Up</Button>
+          </Form>
+          <Link to="/paths">Back to Homepage</Link>
         </div>
       );
     }

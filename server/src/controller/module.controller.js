@@ -44,3 +44,13 @@ exports.update = (req, res) => {
       });
     });
 };
+
+exports.reset = (req, res) => {
+    Module.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+    .then((data) => { res.send(data); })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message
+      });
+    });
+};

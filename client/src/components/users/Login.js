@@ -23,7 +23,6 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
-      // loading: false,
       email: "",
       password: "",
       modalIsOpen: false
@@ -50,7 +49,6 @@ export default class Login extends Component {
 
   login = e => {
     e.preventDefault();
-    // this.setState({ loading: true });
 
     const { email, password } = this.state;
     userLogIn(email, password)
@@ -64,13 +62,14 @@ export default class Login extends Component {
       email: "",
       password: ""
     });
-    
   };
 
   onLogin = e => {
     this.login(e);
     this.closeModal();
-    // this.setState({ loading: false });
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   logout = () => {
@@ -84,12 +83,11 @@ export default class Login extends Component {
     const { isLoggedIn } = this.props;
     return (
       <div>
-        {isLoggedIn && (
+        {isLoggedIn ? (
           <Button outline color="danger" onClick={this.logout}>
             log out
           </Button>            
-        )}
-        {!isLoggedIn && (
+        ) : (
           <div>
             <Button
               outline
@@ -130,7 +128,7 @@ export default class Login extends Component {
                       />
                     </Label>
                   </FormGroup>
-                  <Button onClick={this.onLogin}>Log In</Button>
+                  <Button outline color="success" onClick={this.onLogin}>Log In</Button>
                 </Form>
               </div>
             </Modal>

@@ -163,7 +163,7 @@ class Modules extends Component {
   };
 
   evaluationStep = id => {
-    api.completedModule(id, true).then(doneModules => {
+    api.resetModule(id, true).then(doneModules => {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === id);
       modules[index].completed = doneModules.completed;
@@ -183,7 +183,7 @@ class Modules extends Component {
   };
   
   resetSteps = id => {
-    api.completedModule(id, false).then(notDoneModules => {
+    api.resetModule(id, false).then(notDoneModules => {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === id);
       modules[index].completed = notDoneModules.completed;

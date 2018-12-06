@@ -8,3 +8,6 @@ Thumbs.db
 .vscode
 
 node_modules
+client/src/components/users/modallogin.js
+client/src/history.js
+client/src/components/users/yfgdhf.js

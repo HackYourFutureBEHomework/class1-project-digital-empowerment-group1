@@ -21,10 +21,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// app.get('/', (req, res) => {
-//   res.json({ message: 'API ready' });
-// });
-
 require('./src/route/path.route')(app);
 require('./src/route/module.route')(app);
 require('./src/route/user.route')(app);
