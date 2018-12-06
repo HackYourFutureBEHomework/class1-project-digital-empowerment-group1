@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { userSignUp } from "../../api/users";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
+import history from '../../history';
 
 export default class SignUp extends Component {
   state = {
@@ -27,6 +28,7 @@ export default class SignUp extends Component {
       password: "",
       loading: false
     });
+    history.push('/');
   };
 
   render() {
@@ -61,7 +63,7 @@ export default class SignUp extends Component {
             </FormGroup>
             <Button onClick={this.signUp}>Sign Up</Button>
           </Form>
-          <Link to="/paths">Back to Homepage</Link>
+          <Link to="/paths">Back to Paths</Link>
         </div>
       );
     }
