@@ -28,6 +28,7 @@ export default class SignUp extends Component {
       password: "",
       loading: false
     });
+    alert(`You account has been created!\nPlease log in... `)
     history.push('/');
   };
 

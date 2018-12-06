@@ -56,12 +56,12 @@ export default class Login extends Component {
         cookies.set("auth", res.token);
         delete res.token;
         cookies.set("token", res);
+        this.setState({
+          email: "",
+          password: ""
+        });
       })
-      .catch(err => console.error(err));
-    this.setState({
-      email: "",
-      password: ""
-    });
+    .catch(err => console.error(err));
   };
 
   onLogin = e => {
@@ -69,7 +69,7 @@ export default class Login extends Component {
     this.closeModal();
     setTimeout(() => {
       window.location.reload();
-    }, 100);
+    }, 200);
   };
 
   logout = () => {
