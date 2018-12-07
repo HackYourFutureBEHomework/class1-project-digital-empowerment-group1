@@ -111,3 +111,7 @@
   opacity: 0.5;
   font-weight: bolder;
 }
+
+.login-header {
+  margin-left: 5px;
+}

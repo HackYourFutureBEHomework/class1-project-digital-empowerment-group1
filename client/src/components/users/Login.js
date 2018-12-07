@@ -86,7 +86,7 @@ export default class Login extends Component {
             <Button
               outline
               color="success"
-              className=""
+              className="login-header"
               onClick={this.openModal}>
               Log in
             </Button>
