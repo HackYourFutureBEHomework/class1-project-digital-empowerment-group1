@@ -3,50 +3,50 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../model/user.model");
 
-exports.signup = (req, res) => {
-  const { email, password } = req.body;
-  User.find({ email }).then(user => {
-    if (user.length >= 1) {
-      return res.status(409).json({
-        message: "Email already exists"
-      });
-    } else {
-      bcrypt.hash(password, 10, (err, hash) => {
-        const user = new User({
-          email,
-          password: hash
-        });
-        user
-          .save()
-          .then(result => {
-            res.status(201).json({
-              message: "User created"
-            });
-          })
-          .catch(err => {
-            res.status(500).json({
-              error: err
-            });
-          });
-      });
-    }
-  });
-};
+// exports.signup = (req, res) => {
+//   const { email, password } = req.body;
+//   User.find({ email }).then(user => {
+//     if (user.length >= 1) {
+//       return res.status(409).json({
+//         message: "Email already exists"
+//       });
+//     } else {
+//       bcrypt.hash(password, 10, (err, hash) => {
+//         const user = new User({
+//           email,
+//           password: hash
+//         });
+//         user
+//           .save()
+//           .then(result => {
+//             res.status(201).json({
+//               message: "User created"
+//             });
+//           })
+//           .catch(err => {
+//             res.status(500).json({
+//               error: err
+//             });
+//           });
+//       });
+//     }
+//   });
+// };
 
 exports.login = (req, res) => {
   const { email, password } = req.body;
-  User.find({ email })
+  User.findOne({ email })
     .then(user => {
       if (user.length < 1) {
         return res.status(401).json({
           message: "Auth failed"
         });
       }
-      bcrypt.compare(password, user[0].password, (err, result) => {
+      bcrypt.compare(password, user.password, (err, result) => {
         if (result) {
           const token = jwt.sign(
             {
-              email: user[0].email
+              email: user.email
             },
             process.env.JWT_KEY,
             {
@@ -54,7 +54,7 @@ exports.login = (req, res) => {
             }
           );
           return res.status(200).json({
-            message: `Welcome back ${user[0].email}`,
+            message: `Welcome back ${user.email}`,
             token
           });
         }

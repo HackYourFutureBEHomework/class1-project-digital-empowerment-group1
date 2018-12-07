@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { userLogIn } from "../../api/users";
 import Cookies from "universal-cookie";
 import Modal from "react-modal";
+import { customStyles } from '../customStyles'
+
 import {
   Button,
   Form,
@@ -11,16 +13,6 @@ import {
 } from "reactstrap";
 
 const cookies = new Cookies();
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
-  }
-};
 
 Modal.setAppElement("#root");
 
