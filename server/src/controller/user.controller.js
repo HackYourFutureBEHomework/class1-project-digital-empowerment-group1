@@ -69,17 +69,3 @@ exports.login = (req, res) => {
       });
     });
 };
-
-exports.delete = (req, res) => {
-  User.findOneAndDelete({ _id: req.params.userId })
-    .then(result => {
-      res.status(200).json({
-        message: "User deleted"
-      });
-    })
-    .catch(err => {
-      res.status(500).json({
-        error: err
-      });
-    });
-};

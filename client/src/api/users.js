@@ -23,10 +23,3 @@ export const userLogIn = async (email, password) => {
   });
   return response.json();
 };
-
-export const userDelete = async userId => {
-  const response = await fetch(`${API_URL}/${userId}`, {
-    method: "DELETE"
-  });
-  return response.json();
-};

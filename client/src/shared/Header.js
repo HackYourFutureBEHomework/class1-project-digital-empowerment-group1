@@ -30,9 +30,6 @@ export default class Header extends Component {
               </Button>
             </Link>
             )}
-            {/* {isLoggedIn && (
-              <Redirect to="/paths" />
-            )} */}
           <Login isLoggedIn={isLoggedIn} />
         </div>
         </Navbar>

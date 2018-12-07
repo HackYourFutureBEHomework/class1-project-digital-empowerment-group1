@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import { userLogIn } from "../../api/users";
 import Cookies from "universal-cookie";
 import Modal from "react-modal";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input
+} from "reactstrap";
 
 const cookies = new Cookies();
 const customStyles = {
@@ -25,7 +31,8 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      modalIsOpen: false
+      modalIsOpen: false,
+      invalid: false
     };
   }
 
@@ -47,46 +54,33 @@ export default class Login extends Component {
     });
   };
 
-  login = e => {
-    e.preventDefault();
-
+  login = () => {
     const { email, password } = this.state;
-    userLogIn(email, password)
-      .then(res => {
-        cookies.set("auth", res.token);
-        delete res.token;
-        cookies.set("token", res);
-        this.setState({
-          email: "",
-          password: ""
-        });
-      })
-    .catch(err => console.error(err));
-  };
-
-  onLogin = e => {
-    this.login(e);
-    this.closeModal();
-    setTimeout(() => {
+    userLogIn(email, password).then(res => {
+      if (!res.token) return this.setState({ invalid: true }) + alert('Wrong email or password');      
+      cookies.set("token", res.token);
       window.location.reload();
-    }, 200);
+      this.setState({
+        email: "",
+        password: ""
+      });
+    });
   };
 
   logout = () => {
-    cookies.remove("auth");
     cookies.remove("token");
     window.location.reload();
   };
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, invalid } = this.state;
     const { isLoggedIn } = this.props;
     return (
       <div>
         {isLoggedIn ? (
           <Button outline color="danger" onClick={this.logout}>
             log out
-          </Button>            
+          </Button>
         ) : (
           <div>
             <Button
@@ -110,6 +104,7 @@ export default class Login extends Component {
                     <Label>
                       Email:
                       <Input
+                        invalid={invalid}
                         type="email"
                         value={email}
                         name="email"
@@ -121,6 +116,7 @@ export default class Login extends Component {
                     <Label>
                       Password:
                       <Input
+                        invalid={invalid}
                         type="password"
                         value={password}
                         name="password"
@@ -128,7 +124,9 @@ export default class Login extends Component {
                       />
                     </Label>
                   </FormGroup>
-                  <Button outline color="success" onClick={this.onLogin}>Log In</Button>
+                  <Button outline color="success" onClick={this.login}>
+                    Log In
+                  </Button>
                 </Form>
               </div>
             </Modal>
