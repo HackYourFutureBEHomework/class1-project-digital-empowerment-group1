@@ -6,14 +6,14 @@ const headers = {
   "Access-Control-Allow-Origin": window.location.origin
 };
 
-export const userSignUp = async (email, password) => {
-  const response = await fetch(`${API_URL}/signup`, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({ email: email, password: password })
-  });
-  return response.json();
-};
+// export const userSignUp = async (email, password) => {
+//   const response = await fetch(`${API_URL}/signup`, {
+//     method: "POST",
+//     headers: headers,
+//     body: JSON.stringify({ email: email, password: password })
+//   });
+//   return response.json();
+// };
 
 export const userLogIn = async (email, password) => {
   const response = await fetch(`${API_URL}/login`, {
