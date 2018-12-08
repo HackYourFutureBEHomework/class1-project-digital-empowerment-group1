@@ -5,8 +5,8 @@ export default class ModuleBar extends Component {
   render() {
     return (
       <div>
-        <Navbar color="faded" light>
-          <NavbarBrand href="/paths" className="mr-auto">
+        <Navbar className='path-banner'>
+          <NavbarBrand href="/paths" className="back-to-paths mr-auto">
             <Button>Back to Paths</Button>
           </NavbarBrand>
         </Navbar>
