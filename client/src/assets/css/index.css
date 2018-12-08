@@ -83,6 +83,7 @@ h5 {
   display: flex;
   justify-content: space-between;
   padding-bottom: 30px;
+  flex-direction: column;
 }
 
 .learning-paths, .path-title {
@@ -93,6 +94,10 @@ h5 {
   transition: background-size .4s ease;
   background: linear-gradient(to bottom, transparent 86%, #007bff 0) center center/0% 75% no-repeat;
   padding: 0 17px 2px 13px;
+}
+
+.path-title {
+  margin: 27px 0 20px 0;
 }
 
 .learning-paths:hover, .path-title:hover {
@@ -242,6 +247,7 @@ h5 {
 
 .add-module {
   font-size: 22px;
+  margin-top: 22px;
 }
 
 .content-btn {
@@ -305,8 +311,10 @@ h5 {
 }
 
 .content-container {
+  position: relative;
+  margin: -87px auto;
   width: 67%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .path-cards {
