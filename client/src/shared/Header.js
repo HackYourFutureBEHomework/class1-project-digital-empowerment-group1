@@ -23,13 +23,13 @@ export default class Header extends Component {
             </div>
           </div>
         <div className="header-buttons row">
-          {!isLoggedIn && (
+          {/* {!isLoggedIn && (
             <Link to={`/signup`}>
               <Button outline color="secondary">
                 Sign Up
               </Button>
             </Link>
-            )}
+            )} */}
           <Login isLoggedIn={isLoggedIn} />
         </div>
         </Navbar>
