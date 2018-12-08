@@ -71,14 +71,6 @@ h5 {
   font-size: 2.5rem;
 }
 
-.header-title {
-  color: #616161;
-  background: linear-gradient(to bottom, transparent 74%, #fff 0);
-  /* background: linear-gradient(to bottom, transparent 55%, #fff87e 0) center center/0% 75% no-repeat; */
-  padding: 0 15px 2px 13px;
-  background-size: 94% 100%;
-}
-
 .explanation-btn,
 .exercise-btn,
 .evaluation-btn {

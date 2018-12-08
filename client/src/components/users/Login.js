@@ -70,7 +70,7 @@ export default class Login extends Component {
     return (
       <div>
         {isLoggedIn ? (
-          <Button outline color="danger" onClick={this.logout}>
+          <Button className="login-header" outline color="danger" onClick={this.logout}>
             log out
           </Button>
         ) : (
