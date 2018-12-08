@@ -3,7 +3,7 @@ import * as api from "../../api/modules";
 import { getPath } from '../../api/paths';
 import AddModule from "./AddModule";
 import Module from "./Module";
-import NavBar from '../../shared/NavBar';
+import ModuleBar from '../../shared/ModuleBar';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
 
@@ -163,7 +163,7 @@ class Modules extends Component {
   };
 
   evaluationStep = id => {
-    api.completedModule(id, true).then(doneModules => {
+    api.resetModule(id, true).then(doneModules => {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === id);
       modules[index].completed = doneModules.completed;
@@ -183,7 +183,7 @@ class Modules extends Component {
   };
   
   resetSteps = id => {
-    api.completedModule(id, false).then(notDoneModules => {
+    api.resetModule(id, false).then(notDoneModules => {
       const modules = [...this.state.modules];
       const index = modules.findIndex(t => t._id === id);
       modules[index].completed = notDoneModules.completed;
@@ -196,19 +196,22 @@ class Modules extends Component {
 
   render() {
     const { modules, path } = this.state;
+    const { isLoggedIn } = this.props;
     if (this.state.isLoading) return <div className="loader" />;
     return (
       <div>
-        <NavBar />
+        <ModuleBar />
         <div className='content-container'>
         <div className={this.state.edit ? "hide-list" : "path-header"}>
           <h2 className="path-title">{path.title}</h2>
-          <AddModule
-            state={this.state}
-            handleTitle={this.handleTitle}
-            addModule={this.addModule}
-            handleChange={this.handleChange}
-          />
+          {isLoggedIn && (
+            <AddModule
+              state={this.state}
+              handleTitle={this.handleTitle}
+              addModule={this.addModule}
+              handleChange={this.handleChange}
+            />  
+          )}
         </div>
         {modules.length > 0 ? (
           <Module
@@ -224,6 +227,7 @@ class Modules extends Component {
             handleChange={this.handleChange}
             handleTitleEditChange={this.handleTitleEditChange}
             activeModule={this.activeModule}
+            isLoggedIn={isLoggedIn}
           />
         ) : (
           <p>There are no modules yet</p>

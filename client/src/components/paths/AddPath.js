@@ -1,17 +1,7 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
 import { Button } from "reactstrap";
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
-  }
-};
+import { customStyles } from '../customStyles'
 
 Modal.setAppElement("#root");
 
@@ -37,17 +27,19 @@ export default class AddPath extends Component {
   };
 
   render() {
-    const { state, addPath, handleTitleChange } = this.props;
+    const { state, addPath, handleTitleChange, isLoggedIn} = this.props;
     return (
       <div>
         <div className="add-path">
           <h2 className="learning-paths">Learning paths</h2>
-          <Button
-            color="primary"
-            className="add-path-button"
-            onClick={this.openModal}>
-            <strong>+</strong> New Path
-          </Button>
+          {isLoggedIn && (
+            <Button
+              color="primary"
+              className="add-path-button"
+              onClick={this.openModal}>
+              New Path
+            </Button>
+          )}
         </div>
         <Modal
           isOpen={this.state.modalIsOpen}

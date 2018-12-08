@@ -7,7 +7,7 @@ import 'normalize.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/index.css';
 import './components/404/NotFound.css';
-import './shared/search.css';
+import './shared/header.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

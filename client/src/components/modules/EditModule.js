@@ -2,6 +2,8 @@ import React from "react";
 import classnames from "classnames";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { editorOptions } from '../customStyles'
+
 import {
   TabContent,
   TabPane,
@@ -12,16 +14,6 @@ import {
   Row,
   Col
 } from "reactstrap";
-
-const editorOptions = {
-  toolbar: [
-    [{ header: "1" }, { header: "2" }],
-    ["bold", "italic", "underline", "strike"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["link", "image", "video"],
-    ["clean"]
-  ]
-};
 
 export default class Example extends React.Component {
   state = {

@@ -12,7 +12,7 @@ export default class Module extends Component {
       activeModule, onDragEnd,
       handleDelete, evaluationStep,
       explanationStep, exerciseStep,
-      handleContentEdit,
+      handleContentEdit, isLoggedIn
     } = this.props;
     return (
       <DragDropContext onDragEnd={onDragEnd}>
@@ -33,24 +33,28 @@ export default class Module extends Component {
                       <div className={state.isEdit ? "hide-list" : "show-list"} onClick={() => activeModule(module._id)}>
                         <div className="content">
                           <h3>{module.title}</h3>
-                          {module.completed &&
-                            <input
-                              className="checkbox"
-                              type="checkbox"
-                              onChange={() => resetSteps(module._id)}
-                              checked={module.completed ? "checked" : ""}
-                            />
-                          }
-                          <button
-                            className="delete"
-                            onClick={() => { if (window.confirm(`Delete (${module.title})?`)) handleDelete(module._id);}}>
-                            Delete
-                          </button>
-                          <button
-                            className="edit"
-                            onClick={() => handleEdit(module._id)}>
-                            Edit
-                          </button>
+                              {module.completed &&
+                                <input
+                                  className="checkbox"
+                                  type="checkbox"
+                                  onChange={() => resetSteps(module._id)}
+                                  checked={module.completed ? "checked" : ""}
+                                />
+                              }
+                              {isLoggedIn && (
+                                <div>
+                                  <button
+                                    className="delete"
+                                    onClick={() => { if (window.confirm(`Delete (${module.title})?`)) handleDelete(module._id); }}>
+                                    Delete
+                                  </button>
+                                  <button
+                                    className="edit"
+                                    onClick={() => handleEdit(module._id)}>
+                                    Edit
+                                  </button>
+                                </div>
+                              )}
                           {state.isOpen && (
                             <div className={ state.activeModuleId !== module._id ? "hide-list" : "show-list"}>
                               <div className={ module.completed ? "hide-list" : "show-list" }>

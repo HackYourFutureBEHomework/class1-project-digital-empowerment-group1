@@ -1,9 +1,14 @@
+import Cookies from 'universal-cookie';
+
 const API_URL = 'http://localhost:4000';
+
+const cookies = new Cookies();
 
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': window.location.origin
+  'Access-Control-Allow-Origin': window.location.origin,
+  Authorization: `Bearer ${cookies.get('auth')}`
 };
 
 export const getModules = () => {
@@ -42,9 +47,9 @@ export const updateModule = (id, title, explanation, exercise, evaluation) => {
   }).then(response => response.json());
 };
 
-export const completedModule = (id, completed) => {
+export const resetModule = (id, completed) => {
   return fetch(`${API_URL}/module/${id}`, {
-    method: 'PATCH',
+    method: 'PUT',
     headers: headers,
     body: JSON.stringify({
       completed: completed
