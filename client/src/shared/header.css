@@ -113,5 +113,13 @@
 }
 
 .login-header {
-  margin-left: 5px;
+  margin-right: 50px;
+}
+
+.header-title {
+  color: #616161;
+  background: linear-gradient(to bottom, transparent 74%, #fff 0);
+  padding: 0 15px 2px 13px;
+  background-size: 94% 100%;
+  margin-left: 50px;
 }
