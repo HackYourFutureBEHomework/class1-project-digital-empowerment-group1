@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Navbar } from "reactstrap";
 import Login from "../components/users/Login";
-import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
 
 export default class Header extends Component {
   render() {
@@ -23,13 +21,6 @@ export default class Header extends Component {
             </div>
           </div>
         <div className="header-buttons row">
-          {/* {!isLoggedIn && (
-            <Link to={`/signup`}>
-              <Button outline color="secondary">
-                Sign Up
-              </Button>
-            </Link>
-            )} */}
           <Login isLoggedIn={isLoggedIn} />
         </div>
         </Navbar>
