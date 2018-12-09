@@ -8,7 +8,7 @@ export default class ModuleSteps extends Component {
       <div>
         <ul key={module._id}>
           <li>
-            <h4>Explanation</h4>
+            <h4 className='explanation-border'>Explanation</h4>
             <div
               className={
                 state.activeExplanation ? "show-list" : "hide-list"

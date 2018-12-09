@@ -30,6 +30,7 @@ export default class Module extends Component {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}>
+                      <div className={module.completed ? 'hide-styled-list' : 'show-styled-list'}>
                       <div className={state.isEdit ? "hide-list" : "show-list"} onClick={() => activeModule(module._id)}>
                         <div className="content">
                           <h3>{module.title}</h3>
@@ -69,6 +70,7 @@ export default class Module extends Component {
                             </div>
                           )}
                         </div>
+                      </div>
                       </div>
                       <div className={state.isEdit ? "show-edit" : "hide-list"}>
                         <div style={{ display: state.activeModuleId === module._id ? "block" : "none" }}>
