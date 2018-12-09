@@ -96,9 +96,9 @@ h5 {
   padding: 0 17px 2px 13px;
 }
 
-.path-title {
+/* .path-title {
   margin-bottom: 20px;
-}
+} */
 
 .learning-paths:hover, .path-title:hover {
   background-size: 94% 100%;
@@ -327,7 +327,7 @@ h5 {
 
 .content-container {
   position: relative;
-  margin: -87px auto;
+  margin: 0px auto;
   width: 67%;
 }
 
