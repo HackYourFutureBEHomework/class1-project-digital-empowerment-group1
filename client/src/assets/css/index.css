@@ -29,26 +29,22 @@ p {
 
 h1 {
   font-family: 'Roboto';
-
   font-size: 3.2rem;
 }
 
 h2 {
   font-family: 'Roboto';
-
   font-size: 2.4rem;
 }
 
 h3 {
   font-family: 'Roboto';
-
   font-size: 1.9rem;
   font-weight: bold;
 }
 
 h4 {
   font-family: 'Roboto';
-
   font-size: 1.6rem;
   font-weight: bold;
   padding: 15px;
@@ -56,7 +52,6 @@ h4 {
 
 h5 {
   font-family: 'Roboto';
-
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 2.5;
@@ -79,10 +74,16 @@ h5 {
   width: 14%;
 }
 
+.explanation-border {
+  border-top: 1px rgb(194, 189, 189) solid;
+  margin-top: 10px;
+}
+
 .path-header {
   display: flex;
   justify-content: space-between;
   padding-bottom: 30px;
+  /* flex-direction: column; */
 }
 
 .learning-paths, .path-title {
@@ -93,6 +94,10 @@ h5 {
   transition: background-size .4s ease;
   background: linear-gradient(to bottom, transparent 86%, #007bff 0) center center/0% 75% no-repeat;
   padding: 0 17px 2px 13px;
+}
+
+.path-title {
+  margin-bottom: 20px;
 }
 
 .learning-paths:hover, .path-title:hover {
@@ -147,6 +152,21 @@ h5 {
 
 .show-list {
   margin: auto;
+}
+
+.show-styled-list {
+  margin: auto;
+  border-left: 8px;
+  border-color: #bcbcbb;
+  border-left-style: outset;
+  border-radius: 12px;
+}
+
+.hide-styled-list {
+  border-left: 8px;
+  border-color: #47a248a1;
+  border-left-style: outset;
+  border-radius: 12px;
 }
 
 .hide-module {
@@ -221,7 +241,7 @@ h5 {
   text-align: left;
   border-radius: 5px;
   margin: 5px 0px 20px 0px;
-  padding: 15px 15px 15px 45px;
+  padding: 25px 15px 25px 45px;
   background-color: white;
   box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.6);
 }
@@ -307,8 +327,8 @@ h5 {
 
 .content-container {
   position: relative;
+  margin: -87px auto;
   width: 67%;
-  margin: 0 auto;
 }
 
 .path-cards {
