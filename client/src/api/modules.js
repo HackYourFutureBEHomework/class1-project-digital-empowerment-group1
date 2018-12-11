@@ -8,7 +8,7 @@ const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': window.location.origin,
-  Authorization: `Bearer ${cookies.get('auth')}`
+  Authorization: `Bearer ${cookies.get('token')}`
 };
 
 export const getModules = () => {
@@ -30,7 +30,8 @@ export const createModule = (pathId, title,  explanation, exercise, evaluation) 
 
 export const deleteModule = (id) => {
   return fetch(`${API_URL}/module/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: headers,
   }).then(response => response.json());
 };
 
